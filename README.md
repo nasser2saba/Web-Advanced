@@ -2,7 +2,7 @@
 
 ## Projectbeschrijving
 
-Dit project is een **Interactive Single Page Application (SPA)** ontwikkeld voor het vak **Advanced Web / Dynamic Web**. De applicatie maakt gebruik van de **Rick and Morty API** en laat gebruikers toe om personages uit de Rick & Morty-wereld te verkennen, te zoeken, te filteren, te sorteren en op te slaan als favorieten.
+Dit project is een **Interactive Single Page Application (SPA)** ontwikkeld voor het vak **Advanced Web**. De applicatie maakt gebruik van de **Rick and Morty API** en laat gebruikers toe om personages uit de Rick & Morty-wereld te verkennen, te zoeken, te filteren, te sorteren en op te slaan als favorieten.
 
 Het doel van dit project is om alle aangeleerde **moderne JavaScript-concepten**, **API-integratie**, **DOM-manipulatie** en **localStorage** samen te brengen in één coherente, gebruiksvriendelijke webapplicatie met echte data.
 
