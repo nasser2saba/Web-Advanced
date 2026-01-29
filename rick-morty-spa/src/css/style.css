@@ -50,13 +50,14 @@ h1 {
 }
 
 .characterCard {
-  width: 220px; /* vaste breedte */
-  background-color: #ffd6e0; /* pink */
-  border-radius: 12px;
-  text-align: center;
+  background-color: #ffd6e0;      /* licht roze */
+  border: 2px solid #e75480;      /* donker roze outline */
+  border-radius: 14px;
   padding: 1rem;
   color: black;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 
 .characterCard:hover {
   transform: translateY(-5px);
@@ -93,6 +94,7 @@ button, select, input[type="text"] {
   background-color: var(--button-bg);
   color: var(--button-text);
   cursor: pointer;
+  border: 2px solid #e75480;
 }
 
 input[type="text"] {
@@ -103,6 +105,21 @@ input[type="text"] {
 select {
   margin: 0 0.5rem 1rem 0.5rem;
 }
+
+.loadMoreWrapper {
+  width: 90%;
+  margin: 1rem auto;
+}
+
+#loadMoreBtn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background-color: #ffb6c1;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 
 /* =====================
    Footer

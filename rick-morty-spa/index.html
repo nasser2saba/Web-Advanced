@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="eng">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,20 +18,20 @@
       <!-- Filters -->
       <div id="filters">
         <select id="statusFilter">
-          <option value="">Alle status</option>
+          <option value="">All statuses</option>
           <option value="Alive">Alive</option>
           <option value="Dead">Dead</option>
           <option value="unknown">Unknown</option>
         </select>
 
         <select id="speciesFilter">
-          <option value="">Alle species</option>
+          <option value="">All species</option>
           <option value="Human">Human</option>
           <option value="Alien">Alien</option>
         </select>
 
         <select id="genderFilter">
-          <option value="">Alle genders</option>
+          <option value="">All genders</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Genderless">Genderless</option>
@@ -42,9 +42,9 @@
       <!-- Sorteren -->
       <div id="sort">
         <select id="sortSelect">
-          <option value="">Sorteer op</option>
-          <option value="nameAsc">Naam A-Z</option>
-          <option value="nameDesc">Naam Z-A</option>
+          <option value="">Sort by</option>
+          <option value="nameAsc">Name A-Z</option>
+          <option value="nameDesc">Name Z-A</option>
           <option value="episodesAsc">Episodes ↑</option>
           <option value="episodesDesc">Episodes ↓</option>
         </select>
@@ -54,7 +54,8 @@
 
   <main>
     <div id="characterGrid"></div>
-    <button id="loadMoreBtn">Laad meer</button>
+    <div class="loadMoreWrapper">
+    <button id="loadMoreBtn">Load More</button>
   </main>
 
   <footer>

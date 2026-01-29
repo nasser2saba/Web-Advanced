@@ -1,10 +1,13 @@
-// src/js/state.js
 export const state = {
-  characters: [],       // alle geladen characters
-  filtered: [],         // characters na filter/zoek
-  favorites: [],        // favorieten
-  currentPage: 1,       // huidige pagina
-  totalPages: 1         // totaal aantal pagina's
+  characters: [],     // alle geladen characters
+  filtered: [],       // resultaat van search/filter/sort
+  currentPage: 1,
+  totalPages: 1,
+  filters: {
+    search: '',
+    status: '',
+    species: '',
+    gender: '',
+    sort: ''
+  }
 };
-
-
