@@ -51,6 +51,11 @@ document.getElementById('themeSelect').addEventListener('change', e => {
   applyPreferences();
 });
 
+document.getElementById('favoritesFilter').addEventListener('change', e => {
+  state.filters.favoritesOnly = e.target.checked;
+  applyFilters();
+});
+
 /* LOAD MORE */
 document.getElementById('loadMoreBtn').addEventListener('click', async () => {
   state.currentPage++;

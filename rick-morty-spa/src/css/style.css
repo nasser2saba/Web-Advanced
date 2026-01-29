@@ -162,6 +162,32 @@ footer {
   font-size: 1rem;
 }
 
+.favoritesLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.favoritesLabel input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #e75480; /* matches card border pink */
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.favoritesLabel input[type="checkbox"]:hover {
+  transform: scale(1.2);
+}
+
+.favoritesLabel span {
+  user-select: none;
+}
+
+
 /* Responsive */
 @media (max-width: 600px) {
   #characterGrid {

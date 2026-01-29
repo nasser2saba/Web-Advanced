@@ -9,7 +9,8 @@ export const state = {
     status: '',
     species: '',
     gender: '',
-    sort: ''
+    sort: '',
+    favoritesOnly: false
   },
   preferences: {
     theme: 'light',

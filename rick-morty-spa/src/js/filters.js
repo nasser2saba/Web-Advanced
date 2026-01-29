@@ -25,6 +25,11 @@ export function applyFilters() {
   if (state.filters.sort === 'episodesDesc')
     result.sort((a, b) => b.episode.length - a.episode.length);
 
+  if (state.filters.favoritesOnly) {
+  result = result.filter(c => state.favorites.includes(c.id));
+  }
+
+
   state.filtered = result;
   renderCharacters(result);
 }
