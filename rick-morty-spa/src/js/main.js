@@ -1,27 +1,24 @@
-// src/js/main.js
 import '../css/style.css';
 import { fetchCharacters } from './api.js';
 import { state } from './state.js';
 import { renderCharacters } from './ui.js';
-import { setupSearch, setupFilters, setupSort } from './events.js';
-import { loadFavorites } from './storage.js';
 
-async function init() {
-  // Data ophalen van API
-  state.characters = await fetchCharacters();
-  state.filtered = [...state.characters];
+async function loadCharacters() {
+  const data = await fetchCharacters(state.currentPage);
 
-  // Favorieten laden
-  loadFavorites();
+  state.totalPages = data.info.pages;
+  state.characters.push(...data.results);
 
-  // Render characters
-  renderCharacters(state.filtered);
+  renderCharacters(data.results);
 
-  // Setup interactiviteit
-  setupSearch();
-  setupFilters();
-  setupSort();
+  if (state.currentPage >= state.totalPages) {
+    document.getElementById('loadMoreBtn').style.display = 'none';
+  }
 }
 
-// Start de app
-init();
+document.getElementById('loadMoreBtn').addEventListener('click', () => {
+  state.currentPage++;
+  loadCharacters();
+});
+
+loadCharacters();
