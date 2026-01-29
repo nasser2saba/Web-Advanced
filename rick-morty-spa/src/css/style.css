@@ -30,9 +30,30 @@ body {
   min-height: 100vh;
 }
 
+header{
+  padding: 1rem;
+  background-color: #282c34;
+  color: white;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+#characterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.characterCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  background-color: #f0f0f0;
 }
 
 #app {

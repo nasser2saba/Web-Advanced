@@ -1,7 +1,10 @@
 import './style.css'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import { setupCounter } from '../counter.js'
+import { fetchCharacters } from './api.js';
+import { state } from './state.js';
+import { renderCharacters } from './ui.js';
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -20,5 +23,13 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
+
+async function init() {
+  state.characters = await fetchCharacters();
+  state.filtered = [...state.characters];
+  renderCharacters(state.filtered);
+}
+
+init();
 
 setupCounter(document.querySelector('#counter'))
