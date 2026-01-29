@@ -10,44 +10,46 @@
   <header>
     <h1>Rick & Morty Characters</h1>
 
-    <!-- Zoekfunctie -->
-    <input type="text" id="searchInput" placeholder="Zoek personage...">
+    <div id="controls">
 
-    <!-- Filters -->
-    <div id="filters">
-      <select id="statusFilter">
-        <option value="">Alle status</option>
-        <option value="Alive">Alive</option>
-        <option value="Dead">Dead</option>
-        <option value="unknown">Unknown</option>
-      </select>
+      <!-- Zoekfunctie -->
+      <input type="text" id="searchInput" placeholder="Zoek personage...">
 
-      <select id="speciesFilter">
-        <option value="">Alle species</option>
-        <option value="Human">Human</option>
-        <option value="Alien">Alien</option>
-      </select>
+      <!-- Filters -->
+      <div id="filters">
+        <select id="statusFilter">
+          <option value="">Alle status</option>
+          <option value="Alive">Alive</option>
+          <option value="Dead">Dead</option>
+          <option value="unknown">Unknown</option>
+        </select>
 
-      <select id="genderFilter">
-        <option value="">Alle genders</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Genderless">Genderless</option>
-        <option value="unknown">Unknown</option>
-      </select>
+        <select id="speciesFilter">
+          <option value="">Alle species</option>
+          <option value="Human">Human</option>
+          <option value="Alien">Alien</option>
+        </select>
+
+        <select id="genderFilter">
+          <option value="">Alle genders</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Genderless">Genderless</option>
+          <option value="unknown">Unknown</option>
+        </select>
+      </div>
+
+      <!-- Sorteren -->
+      <div id="sort">
+        <select id="sortSelect">
+          <option value="">Sorteer op</option>
+          <option value="nameAsc">Naam A-Z</option>
+          <option value="nameDesc">Naam Z-A</option>
+          <option value="episodesAsc">Episodes ↑</option>
+          <option value="episodesDesc">Episodes ↓</option>
+        </select>
+      </div>
     </div>
-
-    <!-- Sorteren -->
-    <div id="sort">
-      <select id="sortSelect">
-        <option value="">Sorteer op</option>
-        <option value="nameAsc">Naam A-Z</option>
-        <option value="nameDesc">Naam Z-A</option>
-        <option value="episodesAsc">Episodes ↑</option>
-        <option value="episodesDesc">Episodes ↓</option>
-      </select>
-    </div>
-
   </header>
 
   <main>

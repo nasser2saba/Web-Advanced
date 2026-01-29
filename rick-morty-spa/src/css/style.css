@@ -6,89 +6,67 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-color: #cce7ff;      /* light blue background */
+  --card-color: #ffd6e0;    /* light pink cards */
+  --text-color: #000000;    /* black text */
+  --button-bg: #ffffff;      /* white buttons */
+  --button-text: #000000;
 }
 
-/* Links */
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-/* =====================
-   Body & Layout
-===================== */
 body {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block; /* niet flex! */
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--bg-color, #242424);
+  background-color: #cce7ff; /* light blue */
+  color: #000000; /* black text */
 }
 
-/* Container */
-#app {
-  max-width: 1280px;
+header {
   width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+  background-color: #87cefa; /* skyblue */
   text-align: center;
 }
 
-/* Header */
-header {
-  padding: 1rem;
-  background-color: #282c34;
-  color: white;
-  width: 100%;
-}
-
 h1 {
-  font-size: 3.2em;
+  font-size: 3em;
   line-height: 1.1;
   margin-bottom: 1rem;
 }
 
 /* =====================
-   Character Grid & Cards
+   Grid & Cards
 ===================== */
+
 #characterGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 1rem;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto; /* center grid container */
+  justify-items: center; 
 }
 
 .characterCard {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
+  width: 220px; /* vaste breedte */
+  background-color: #ffd6e0; /* pink */
+  border-radius: 12px;
   text-align: center;
-  background-color: #f0f0f0;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  padding: 1rem;
+  color: black;
+}
+
+.characterCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 
 .characterCard img {
   width: 100%;
-  border-bottom: 1px solid #ccc;
-  border-radius: 8px 8px 0 0;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 0.5rem;
 }
 
 /* Favorite button */
@@ -97,7 +75,7 @@ h1 {
   font-size: 1.5rem;
   border: none;
   background: none;
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
   transition: transform 0.2s;
 }
 .favoriteBtn:hover {
@@ -105,66 +83,65 @@ h1 {
 }
 
 /* =====================
-   Buttons & General
+   Buttons / Inputs
 ===================== */
-button {
+button, select, input[type="text"] {
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   cursor: pointer;
-  transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
+
+input[type="text"] {
+  margin-bottom: 1rem;
+  width: 200px;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+select {
+  margin: 0 0.5rem 1rem 0.5rem;
 }
 
 /* =====================
-   Logos / Demo
+   Footer
 ===================== */
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-color);
 }
 
 /* =====================
-   Misc / Cards
+   Responsive
 ===================== */
-.card {
-  padding: 2em;
+@media (max-width: 600px) {
+  #characterGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .characterCard {
+    width: 160px;
+  }
+  input[type="text"] {
+    width: 100%;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+#controls {
+  display: flex;
+  flex-wrap: wrap;       /* past op kleinere schermen */
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* =====================
-   Dark / Light Mode
-===================== */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+#controls input,
+#controls select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }

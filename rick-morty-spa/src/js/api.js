@@ -6,9 +6,12 @@ export async function fetchCharacters(page = 1) {
     const response = await fetch(`${BASE_URL}?page=${page}`);
     if (!response.ok) throw new Error('API fout');
     const data = await response.json();
-    return data.results; // array van characters
+    return {
+      characters: data.results,
+      totalPages: data.info.pages
+    };
   } catch (error) {
     console.error('Fout bij ophalen characters:', error);
-    return [];
+    return { characters: [], totalPages: 0 };
   }
 }
