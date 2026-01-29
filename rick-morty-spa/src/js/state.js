@@ -1,6 +1,7 @@
 export const state = {
   characters: [],     // alle geladen characters
   filtered: [],       // resultaat van search/filter/sort
+  favorites: [],
   currentPage: 1,
   totalPages: 1,
   filters: {
@@ -9,5 +10,9 @@ export const state = {
     species: '',
     gender: '',
     sort: ''
+  },
+  preferences: {
+    theme: 'light',
+    language: 'eng'
   }
 };

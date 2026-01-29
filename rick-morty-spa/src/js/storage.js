@@ -1,15 +1,21 @@
-// src/js/storage.js
 import { state } from './state.js';
 
-// Favorieten opslaan in localStorage
+/* FAVORIETEN */
 export function saveFavorites() {
   localStorage.setItem('favorites', JSON.stringify(state.favorites));
 }
 
-// Favorieten laden bij start
 export function loadFavorites() {
   const stored = localStorage.getItem('favorites');
-  if (stored) {
-    state.favorites = JSON.parse(stored);
-  }
+  if (stored) state.favorites = JSON.parse(stored);
+}
+
+/* VOORKEUREN */
+export function savePreferences() {
+  localStorage.setItem('preferences', JSON.stringify(state.preferences));
+}
+
+export function loadPreferences() {
+  const stored = localStorage.getItem('preferences');
+  if (stored) state.preferences = JSON.parse(stored);
 }

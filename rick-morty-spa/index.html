@@ -5,12 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rick & Morty SPA</title>
   <link rel="stylesheet" href="./src/css/style.css">
+</select>
+
 </head>
 <body>
   <header>
     <h1>Rick & Morty Characters</h1>
 
     <div id="controls">
+      <select id="themeSelect">
+      <option value="pink">Pink</option>
+      <option value="blue">Blue</option>
+      <option value="blue">Dark</option>
+    </select>
 
       <!-- Zoekfunctie -->
       <input type="text" id="searchInput" placeholder="Zoek personage...">
@@ -52,11 +59,13 @@
     </div>
   </header>
 
+  <div>
   <main>
     <div id="characterGrid"></div>
     <div class="loadMoreWrapper">
     <button id="loadMoreBtn">Load More</button>
   </main>
+  </div>
 
   <footer>
     <p>Rick & Morty SPA - Web Advanced Project</p>

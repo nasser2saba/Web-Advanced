@@ -1,26 +1,62 @@
 import '../css/style.css';
-import { fetchCharacters } from './api.js';
 import { state } from './state.js';
-import { setupEvents, applyFilters } from './events.js';
+import { fetchCharacters } from './api.js';
+import { loadFavorites, loadPreferences, savePreferences } from './storage.js';
+import { applyPreferences } from './preferences.js';
+import { applyFilters } from './filters.js';
 
-async function loadCharacters() {
+/* APP START */
+async function init() {
+  loadFavorites();
+  loadPreferences();
+  applyPreferences();
+
   const data = await fetchCharacters(state.currentPage);
+  state.characters = data.characters;
+  state.totalPages = data.totalPages;
 
-  state.totalPages = data.info.pages;
-  state.characters.push(...data.results);
-
-  // 🔥 HERPAS FILTERS i.p.v reset
   applyFilters();
-
-  if (state.currentPage >= state.totalPages) {
-    document.getElementById('loadMoreBtn').style.display = 'none';
-  }
 }
 
-document.getElementById('loadMoreBtn').addEventListener('click', async () => {
-  state.currentPage++;
-  await loadCharacters();
+/* SEARCH & FILTERS & SORT */
+document.getElementById('searchInput').addEventListener('input', e => {
+  state.filters.search = e.target.value;
+  applyFilters();
 });
 
-setupEvents();
-loadCharacters();
+document.getElementById('statusFilter').addEventListener('change', e => {
+  state.filters.status = e.target.value;
+  applyFilters();
+});
+
+document.getElementById('speciesFilter').addEventListener('change', e => {
+  state.filters.species = e.target.value;
+  applyFilters();
+});
+
+document.getElementById('genderFilter').addEventListener('change', e => {
+  state.filters.gender = e.target.value;
+  applyFilters();
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  state.filters.sort = e.target.value;
+  applyFilters();
+});
+
+/* THEMA EVENT */
+document.getElementById('themeSelect').addEventListener('change', e => {
+  state.preferences.theme = e.target.value;
+  savePreferences();
+  applyPreferences();
+});
+
+/* LOAD MORE */
+document.getElementById('loadMoreBtn').addEventListener('click', async () => {
+  state.currentPage++;
+  const data = await fetchCharacters(state.currentPage);
+  state.characters.push(...data.characters);
+  applyFilters();
+});
+
+init();

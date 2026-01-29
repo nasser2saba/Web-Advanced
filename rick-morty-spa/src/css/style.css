@@ -1,63 +1,85 @@
 /* =====================
-   Root / Basis Styles
+   Root / Base Styles
 ===================== */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  --bg-color: #cce7ff;      /* light blue background */
-  --card-color: #ffd6e0;    /* light pink cards */
-  --text-color: #000000;    /* black text */
-  --button-bg: #ffffff;      /* white buttons */
-  --button-text: #000000;
+  --bg: #e6f2ff;      /* default blue */
+  --card: #cce4ff;
+  --text-color: #000;
+  --button-bg: #ffffff;
+  --button-text: #000;
+  --border-color: #e75480; /* default pink outline */
 }
 
+/* Body / Global */
 body {
-  margin: 0;
-  display: block; /* niet flex! */
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #cce7ff; /* light blue */
-  color: #000000; /* black text */
+  background-color: var(--bg);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
 }
 
+/* Themes */
+body[data-theme="pink"] {
+  --bg: #ffe4f0;
+  --card: #ffb6c1;
+  --text-color: #000;
+  --button-bg: #ffffff;
+  --button-text: #000;
+  --border-color: #e75480;
+}
+
+body[data-theme="blue"] {
+  --bg: #e6f2ff;
+  --card: #cce4ff;
+  --text-color: #000;
+  --button-bg: #ffffff;
+  --button-text: #000;
+  --border-color: #87cefa;
+}
+
+body[data-theme="dark"] {
+  --bg: #2a2735;
+  --card: #444;
+  --text-color: #fff;
+  --button-bg: #555;
+  --button-text: #fff;
+  --border-color: #888;
+}
+
+/* Header follows body theme */
 header {
   width: 100%;
   padding: 1rem;
-  background-color: #87cefa; /* skyblue */
   text-align: center;
-}
-
-h1 {
-  font-size: 3em;
-  line-height: 1.1;
-  margin-bottom: 1rem;
+  background-color: var(--bg);
+  transition: background 0.3s;
 }
 
 /* =====================
    Grid & Cards
 ===================== */
-
 #characterGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 1rem;
   width: 90%;
-  margin: 0 auto; /* center grid container */
-  justify-items: center; 
+  margin: 0 auto;
+  justify-items: start; /* aligns cards left, Load More will align under first card */
 }
 
 .characterCard {
-  background-color: #ffd6e0;      /* licht roze */
-  border: 2px solid #e75480;      /* donker roze outline */
+  background-color: var(--card);
+  border: 2px solid var(--border-color);
   border-radius: 14px;
   padding: 1rem;
-  color: black;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--text-color);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s, color 0.3s, border-color 0.3s;
 }
-
 
 .characterCard:hover {
   transform: translateY(-5px);
@@ -70,43 +92,22 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
-/* Favorite button */
-.favoriteBtn {
-  cursor: pointer;
-  font-size: 1.5rem;
-  border: none;
-  background: none;
-  margin-top: 0.5rem;
-  transition: transform 0.2s;
-}
-.favoriteBtn:hover {
-  transform: scale(1.2);
-}
-
-/* =====================
-   Buttons / Inputs
-===================== */
+/* Buttons / Inputs */
 button, select, input[type="text"] {
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 2px solid var(--border-color);
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: var(--button-bg);
   color: var(--button-text);
   cursor: pointer;
-  border: 2px solid #e75480;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
-input[type="text"] {
-  margin-bottom: 1rem;
-  width: 200px;
-}
-
-select {
-  margin: 0 0.5rem 1rem 0.5rem;
-}
-
+/* Load More button */
 .loadMoreWrapper {
+  display: flex;
+  justify-content: flex-start; /* aligns under left-most card */
   width: 90%;
   margin: 1rem auto;
 }
@@ -114,16 +115,28 @@ select {
 #loadMoreBtn {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  background-color: #ffb6c1;
-  color: black;
   font-weight: 600;
+  cursor: pointer;
+  background-color: var(--card);
+  color: var(--text-color);
+}
+
+/* Favorite button */
+.favBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
   cursor: pointer;
 }
 
+.favBtn.active {
+  transform: scale(1.2);
+}
 
-/* =====================
-   Footer
-===================== */
+/* Footer */
 footer {
   margin-top: 2rem;
   padding: 1rem;
@@ -131,24 +144,10 @@ footer {
   color: var(--text-color);
 }
 
-/* =====================
-   Responsive
-===================== */
-@media (max-width: 600px) {
-  #characterGrid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-  .characterCard {
-    width: 160px;
-  }
-  input[type="text"] {
-    width: 100%;
-  }
-}
-
+/* Controls */
 #controls {
   display: flex;
-  flex-wrap: wrap;       /* past op kleinere schermen */
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
@@ -161,4 +160,17 @@ footer {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #characterGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .characterCard {
+    width: 160px;
+  }
+  input[type="text"] {
+    width: 100%;
+  }
 }
