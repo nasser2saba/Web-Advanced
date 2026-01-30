@@ -5,9 +5,13 @@ import { loadFavorites, loadPreferences, savePreferences } from './storage.js';
 import { applyPreferences } from './preferences.js';
 import { applyFilters } from './filters.js';
 import { initObserver } from './observer.js';
+import { initFormValidation } from './form.js';
+import { initRouter } from './navigation.js';
 
+
+initFormValidation();
 initObserver();
-
+initRouter();
 
 /* APP START */
 async function init() {
@@ -60,12 +64,11 @@ document.getElementById('favoritesFilter').addEventListener('change', e => {
   applyFilters();
 });
 
-/* LOAD MORE */
-document.getElementById('loadMoreBtn').addEventListener('click', async () => {
-  state.currentPage++;
-  const data = await fetchCharacters(state.currentPage);
-  state.characters.push(...data.characters);
-  applyFilters();
+document.querySelectorAll('#viewToggle button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.view = btn.dataset.view; // 'cards' or 'list'
+    applyFilters();
+  });
 });
 
 init();

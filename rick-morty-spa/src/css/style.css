@@ -18,6 +18,42 @@
   box-sizing: border-box;
 }
 
+.page {
+  display: none;
+  padding: 2rem;
+}
+
+.page.active {
+  display: block;
+}
+
+
+/* HOME */
+.homeContent {
+  max-width: 700px;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.homeContent h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.homeContent p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+}
+
+.ctaBtn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+
 html, body {
   max-width: 100%;
   overflow-x: hidden;
@@ -134,6 +170,7 @@ button, select, input[type="text"] {
   color: var(--text-color);
 }
 
+
 /* Favorite button */
 .favBtn {
   position: absolute;
@@ -148,6 +185,8 @@ button, select, input[type="text"] {
 .favBtn.active {
   transform: scale(1.2);
 }
+
+
 
 /* Footer */
 footer {

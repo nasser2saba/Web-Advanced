@@ -1,28 +1,45 @@
-<!DOCTYPE html>
-<html lang="eng">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rick & Morty SPA</title>
-  <link rel="stylesheet" href="./src/css/style.css">
-
-</head>
 <body>
+
   <header>
     <h1>Rick & Morty Characters</h1>
 
-    <div id="controls">
-      <select id="themeSelect">
-      <option value="pink">Pink</option>
-      <option value="blue">Blue</option>
-      <option value="dark">Dark</option>
-      </select>
+    <nav>
+      <button data-page="home">Home</button>
+      <button data-page="characters">Characters</button>
+      <button data-page="feedback">Feedback</button>
+    </nav>
+  </header>
 
-      <!-- Zoekfunctie -->
-      <input type="text" id="searchInput" placeholder="Zoek personage...">
+  <main>
 
-      <!-- Filters -->
-      <div id="filters">
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+      <div class="homeContent">
+        <h2>Welcome <br> to the Rick & Morty Explorer </h2>
+        <p>
+          Discover characters from the Rick & Morty universe.
+          Filter, sort, and favorite them your way.
+        </p>
+        <button data-page="characters" class="ctaBtn">
+          Explore Characters
+        </button>
+      </div>
+    </section>
+
+    <!-- CHARACTERS PAGE -->
+    <section id="characters" class="page">
+
+      <!-- CONTROLS (ONLY HERE) -->
+      <div id="controls">
+
+        <select id="themeSelect">
+          <option value="pink">Pink</option>
+          <option value="blue">Blue</option>
+          <option value="dark">Dark</option>
+        </select>
+
+        <input type="text" id="searchInput" placeholder="Search character...">
+
         <select id="statusFilter">
           <option value="">All statuses</option>
           <option value="Alive">Alive</option>
@@ -43,35 +60,52 @@
           <option value="Genderless">Genderless</option>
           <option value="unknown">Unknown</option>
         </select>
-      </div>
 
-      <!-- Sorteren -->
-      <div id="sort">
         <select id="sortSelect">
           <option value="">Sort by</option>
           <option value="nameAsc">Name A-Z</option>
           <option value="nameDesc">Name Z-A</option>
-          <option value="episodesAsc">Episodes ↑</option>
-          <option value="episodesDesc">Episodes ↓</option>
         </select>
+
+        <label class="favoritesLabel">
+          <input type="checkbox" id="favoritesFilter">
+          Show Favorites 
+        </label>
+
+        <div id="viewToggle">
+          <button data-view="cards">Cards</button>
+          <button data-view="list">List</button>
+        </div>
+
       </div>
 
-      <label class="favoritesLabel">
-        <input type="checkbox" id="favoritesFilter">
-       <span>Show Favorites ❤️</span>
-      </label>
-    </div>
-  </header>
+      <!-- DATA -->
+      <div id="characterGrid"></div>
+      <div id="observerTarget"></div>
 
-  <div>
-  <main>
-    <div id="characterGrid"></div>
-    <div class="loadMoreWrapper">
-    <button id="loadMoreBtn">Load More</button>
+    </section>
+
+    <!-- FEEDBACK PAGE -->
+    <section id="feedback" class="page">
+      <h2>Did you like this website?</h2>
+
+      <form id="feedbackForm">
+        <label>
+          Your name:
+          <input type="text" id="userName" required minlength="2">
+        </label>
+
+        <p>How was your experience?</p>
+        <label><input type="radio" name="rating" value="great" required> Great</label>
+        <label><input type="radio" name="rating" value="ok"> OK</label>
+        <label><input type="radio" name="rating" value="meh"> Meh</label>
+
+        <button type="submit">Submit feedback</button>
+        <p id="formMessage"></p>
+      </form>
+    </section>
+
   </main>
-  </div>
-  <div id="observerTarget"></div>
-
 
   <footer>
     <p>Rick & Morty SPA - Web Advanced Project</p>
@@ -79,4 +113,3 @@
 
   <script type="module" src="./src/js/main.js"></script>
 </body>
-</html>
