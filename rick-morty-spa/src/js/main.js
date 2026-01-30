@@ -64,11 +64,5 @@ document.getElementById('favoritesFilter').addEventListener('change', e => {
   applyFilters();
 });
 
-document.querySelectorAll('#viewToggle button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    state.view = btn.dataset.view; // 'cards' or 'list'
-    applyFilters();
-  });
-});
 
 init();

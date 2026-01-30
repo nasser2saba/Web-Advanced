@@ -29,15 +29,6 @@ export function applyFilters() {
   result = result.filter(c => state.favorites.includes(c.id));
   }
 
-  /*
-  if (state.view === 'cards') {
-  observer.observe(sentinel);
-  } else {
-  observer.disconnect();
-  }
-
-*/
-
   state.filtered = result;
   renderCharacters(result);
 }

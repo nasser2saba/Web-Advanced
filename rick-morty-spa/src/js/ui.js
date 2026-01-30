@@ -1,26 +1,19 @@
 import { state } from './state.js';
 import { saveFavorites } from './storage.js';
+import { applyFilters } from './filters.js';
 
 /**
- * Main render entry point
- * Called every time filters / view / favorites change
+ * Main render function
+ * Decides between card view & list view
  */
 export function renderCharacters(characters) {
   const grid = document.getElementById('characterGrid');
   grid.innerHTML = '';
-
-  if (state.view === 'list') {
-    renderList(characters);
-  } else {
-    renderCards(characters);
-  }
-}
-
-/* =====================
-   CARD VIEW
-===================== */
-function renderCards(characters) {
-  const grid = document.getElementById('characterGrid');
+  
+  /* =====================
+     CARD VIEW
+  ===================== */
+  grid.className = '';
 
   characters.forEach(char => {
     const isFav = state.favorites.includes(char.id);
@@ -29,12 +22,6 @@ function renderCards(characters) {
     card.className = 'characterCard';
 
     card.innerHTML = `
-      <img src="${char.image}" alt="${char.name}">
-      <h3>${char.name}</h3>
-      <p>Status: ${char.status}</p>
-      <p>Species: ${char.species}</p>
-      <p>Gender: ${char.gender}</p>
-
       <button 
         class="favBtn ${isFav ? 'active' : ''}" 
         data-id="${char.id}"
@@ -42,6 +29,12 @@ function renderCards(characters) {
       >
         ${isFav ? '❤️' : '🤍'}
       </button>
+
+      <img src="${char.image}" alt="${char.name}">
+      <h3>${char.name}</h3>
+      <p>Status: ${char.status}</p>
+      <p>Species: ${char.species}</p>
+      <p>Gender: ${char.gender}</p> 
     `;
 
     grid.appendChild(card);
@@ -51,50 +44,7 @@ function renderCards(characters) {
 }
 
 /* =====================
-   LIST VIEW
-===================== */
-function renderList(characters) {
-  const grid = document.getElementById('characterGrid');
-
-  const table = document.createElement('table');
-  table.className = 'characterTable';
-
-  table.innerHTML = `
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Species</th>
-        <th>Gender</th>
-        <th>Episodes</th>
-        <th>Fav</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  `;
-
-  const tbody = table.querySelector('tbody');
-
-  characters.forEach(char => {
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-      <td>${char.name}</td>
-      <td>${char.status}</td>
-      <td>${char.species}</td>
-      <td>${char.gender}</td>
-      <td>${char.episode.length}</td>
-      <td>${state.favorites.includes(char.id) ? '❤️' : ''}</td>
-    `;
-
-    tbody.appendChild(row);
-  });
-
-  grid.appendChild(table);
-}
-
-/* =====================
-   FAVORITES LOGIC
+   FAVORITES
 ===================== */
 function setupFavoriteListeners() {
   document.querySelectorAll('.favBtn').forEach(btn => {
@@ -108,9 +58,7 @@ function setupFavoriteListeners() {
       }
 
       saveFavorites();
-
-      // Re-render to update heart instantly
-      renderCharacters(state.filtered);
+      applyFilters();
     });
   });
 }

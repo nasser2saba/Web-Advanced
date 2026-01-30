@@ -1,17 +1,30 @@
 export function initRouter() {
-  const buttons = document.querySelectorAll('[data-page]');
   const pages = document.querySelectorAll('.page');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.page;
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-page]');
+    if (!btn) return;
 
-      pages.forEach(page => page.classList.remove('active'));
+    const targetPage = btn.dataset.page;
+    const targetSection = document.getElementById(targetPage);
 
-      const targetPage = document.getElementById(target);
-      if (targetPage) {
-        targetPage.classList.add('active');
-      }
-    });
+    if (!targetSection) return;
+
+    // Hide all pages
+    pages.forEach(page => page.classList.remove('active'));
+
+    // Remove active state from nav buttons only
+    document.querySelectorAll('.navBtn').forEach(b =>
+      b.classList.remove('active')
+    );
+
+    // Show target page
+    targetSection.classList.add('active');
+
+    // Activate nav button if it exists
+    const navBtn = document.querySelector(
+      `.navBtn[data-page="${targetPage}"]`
+    );
+    navBtn?.classList.add('active');
   });
 }

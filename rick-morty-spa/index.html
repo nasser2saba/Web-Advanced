@@ -4,9 +4,9 @@
     <h1>Rick & Morty Characters</h1>
 
     <nav>
-      <button data-page="home">Home</button>
-      <button data-page="characters">Characters</button>
-      <button data-page="feedback">Feedback</button>
+      <button class="navBtn" data-page="home">Home</button>
+      <button class="navBtn" data-page="characters">Characters</button>
+      <button class="navBtn" data-page="feedback">Feedback</button>
     </nav>
   </header>
 
@@ -20,7 +20,7 @@
           Discover characters from the Rick & Morty universe.
           Filter, sort, and favorite them your way.
         </p>
-        <button data-page="characters" class="ctaBtn">
+        <button data-page="characters" class="navBtn">
           Explore Characters
         </button>
       </div>
@@ -57,7 +57,7 @@
           <option value="">All genders</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
-          <option value="Genderless">Genderless</option>
+         
           <option value="unknown">Unknown</option>
         </select>
 
@@ -71,12 +71,6 @@
           <input type="checkbox" id="favoritesFilter">
           Show Favorites 
         </label>
-
-        <div id="viewToggle">
-          <button data-view="cards">Cards</button>
-          <button data-view="list">List</button>
-        </div>
-
       </div>
 
       <!-- DATA -->
