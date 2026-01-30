@@ -4,6 +4,10 @@ import { fetchCharacters } from './api.js';
 import { loadFavorites, loadPreferences, savePreferences } from './storage.js';
 import { applyPreferences } from './preferences.js';
 import { applyFilters } from './filters.js';
+import { initObserver } from './observer.js';
+
+initObserver();
+
 
 /* APP START */
 async function init() {

@@ -14,6 +14,16 @@
   --border-color: #e75480; /* default pink outline */
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
 /* Body / Global */
 body {
   background-color: var(--bg);
@@ -63,15 +73,19 @@ header {
 ===================== */
 #characterGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 1rem;
   padding: 1rem;
-  width: 90%;
   margin: 0 auto;
+  max-width: 1200px;
   justify-items: start; /* aligns cards left, Load More will align under first card */
 }
 
+
 .characterCard {
+  width: 100%;
+  max-width: 260px;
+  position: relative;
   background-color: var(--card);
   border: 2px solid var(--border-color);
   border-radius: 14px;
@@ -107,8 +121,7 @@ button, select, input[type="text"] {
 /* Load More button */
 .loadMoreWrapper {
   display: flex;
-  justify-content: flex-start; /* aligns under left-most card */
-  width: 90%;
+  justify-content: flex-start; /* aligns under left-most card */  
   margin: 1rem auto;
 }
 
@@ -189,9 +202,9 @@ footer {
 
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   #characterGrid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
   .characterCard {
     width: 160px;
@@ -200,3 +213,6 @@ footer {
     width: 100%;
   }
 }
+
+
+
