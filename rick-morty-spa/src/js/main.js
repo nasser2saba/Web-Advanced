@@ -7,11 +7,13 @@ import { applyFilters } from './filters.js';
 import { initObserver } from './observer.js';
 import { initFormValidation } from './form.js';
 import { initRouter } from './navigation.js';
+import { initSlideshow } from './slideshow.js';
 
 
 initFormValidation();
 initObserver();
 initRouter();
+initSlideshow();
 
 /* APP START */
 async function init() {
