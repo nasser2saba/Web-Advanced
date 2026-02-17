@@ -10,7 +10,7 @@ export async function fetchCharacters(page = 1) {
       totalPages: data.info.pages
     };
   } catch (error) {
-    console.error('Fout bij ophalen characters:', error);
+    console.error('Error fetching characters:', error);
     return { characters: [], totalPages: 1 };
   }
 }
