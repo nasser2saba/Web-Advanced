@@ -1,6 +1,6 @@
 export const state = {
-  characters: [],     // alle geladen characters
-  filtered: [],       // resultaat van search/filter/sort
+  characters: [],    
+  filtered: [],       
   favorites: [],
   view: 'cards',
   currentPage: 1,
@@ -14,9 +14,7 @@ export const state = {
     favoritesOnly: false
   },
   preferences: {
-    theme: 'light',
-    language: 'eng'
+    theme: 'pink',
   }
 };
 
-//state.view = 'cards';
