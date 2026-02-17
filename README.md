@@ -151,15 +151,20 @@ index.html
 
 ## Screenshots
 
-De verschillende Theme's: 
+**De verschillende Themas:**
 
-![alt text](image.png)
-![alt text](image.png)
+![alt text](/rick-morty-spa/src/assets/screenshots/PinkTheme.png)
+![alt text](/rick-morty-spa/src/assets/screenshots/BlueTheme.png)
 ![alt text](/rick-morty-spa/src/assets/screenshots/DarkTheme.png)
 
+**De verschillende Pagina's:**
+![alt text](/rick-morty-spa/src/assets/screenshots/HomePage.png)
+![alt text](/rick-morty-spa/src/assets/screenshots/FeedbackPage.png)
 
-![alt text](image.png)
----
+**Mobile View (Iphone 12 pro):**
+![alt text](/rick-morty-spa/src/assets/screenshots/Mobile-Home.png)
+![alt text](/rick-morty-spa/src/assets/screenshots/Mobile-Characters.png)
+![alt text](/rick-morty-spa/src/assets/screenshots/Mobile-Feedback.png)
 
 ## Auteur
 
