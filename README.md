@@ -27,7 +27,7 @@ Het doel van dit project is om alle aangeleerde **moderne JavaScript-concepten**
 
 ---
 
-### 🔍 Interactiviteit
+### Interactiviteit
 
 * **Zoekfunctie** op naam van personages
 * **Filtermogelijkheden**:
@@ -151,8 +151,14 @@ index.html
 
 ## Screenshots
 
+De verschillende Theme's: 
+
+![alt text](image.png)
+![alt text](image.png)
+![alt text](/rick-morty-spa/src/assets/screenshots/DarkTheme.png)
 
 
+![alt text](image.png)
 ---
 
 ## Auteur
