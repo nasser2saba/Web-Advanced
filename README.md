@@ -66,6 +66,30 @@ Het doel van dit project is om alle aangeleerde **moderne JavaScript-concepten**
 
 ## Technische Vereisten & Implementatie
 
+### 1.DOM Manipulation:
+- **Selection:** Used document.getElementById and querySelectorAll in ui.js and main.js.
+- **Manipulation:** Dynamic card creation using grid.appendChild(card) in ui.js.
+- **Events:** Added listeners for filters, search, and navigation (e.g., initRouter in navigation.js).
+### 2.Modern JavaScript:
+- **Constants/Arrow Functions:** Used throughout all .js files (e.g., export const state, entries => {}).
+- **Template Literals:** Used for generating character card HTML in ui.js.
+- **Array Methods:** Used .filter(), .forEach(), .includes(), and .sort() in filters.js and ui.js.
+- **Ternary Operator:** Used for toggling heart icons: ${isFav ? '❤️' : '🤍'} in ui.js.
+- **Promises / Async & Await:** Implemented in api.js to fetch data from the Rick & Morty API.
+- **Observer API:** Used in observer.js to implement infinite scrolling.
+### 3.Data & API:
+- **Fetch:** Implemented in api.js to retrieve character data.
+- **JSON:** Processed API responses and local storage data in api.js and storage.js.
+### 4.Storage & Validation:
+- **Form Validation:** Implemented in form.js using trim() and checking for radio button selection before submission.
+- **LocalStorage:** Used in storage.js to persist favorites and theme preferences.
+### 5.Styling & Layout:
+- **CSS Grid:** Used for the main character gallery.
+- **Flexbox:** Used for navigation, controls, and form alignment.
+- **User-Friendly Elements:** Added heart icons for favorites and a responsive slideshow.
+### 6.Tooling:
+- Project structured for Vite with a clear separation of src/js, src/css, and src/assets
+
 ### DOM Manipulatie
 
 * Selecteren van DOM-elementen (`querySelector`, `getElementById`)
@@ -172,6 +196,5 @@ Saba Le Nassr
 Opleiding: Bachelor in de Toegepaste Informatica
 Hogeschool: ErasmusHogeSchool Brussel
 Vak: Web Advanced 
-
 
 

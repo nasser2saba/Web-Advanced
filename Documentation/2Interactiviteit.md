@@ -1,70 +1,268 @@
-# Interactiviteit
+# Documentatie 2 – Interactiviteit & Dynamische Functionaliteiten
 
-## Overzicht
+---
 
-Om de applicatie gebruiksvriendelijk en interactief te maken, zijn verschillende interactieve functies geïmplementeerd:
+## 1. Overzicht
 
-* Zoekfunctie
-* Filterfunctionaliteit
-* Sorteermogelijkheden
+In deze fase werd de applicatie uitgebreid met interactieve functionaliteiten die de gebruikerservaring aanzienlijk verbeteren.
 
-Deze functies werken samen op dezelfde dataset, zodat de gebruiker dynamisch resultaten kan aanpassen zonder nieuwe API-calls.
+De focus lag op:
 
-## 1. Dynamisch Zoeken
-De zoekfunctie in `main.js` luistert naar het `input`-event op het zoekveld. De lijst met personages wordt in real-time gefilterd op basis van de ingevoerde naam. Hierbij wordt `toLowerCase()` gebruikt om de zoekopdracht hoofdletterongevoelig te maken.
+* Zoekfunctionaliteit
+* Dynamische filtering
+* Sortering
+* SPA-navigatie
+* Formulierverwerking met validatie
+* Realtime her-rendering van data
 
-Stap-voor-stap:
+Alle interacties werken op basis van de centrale `state`, waardoor de applicatie consistent en uitbreidbaar blijft.
 
-1. Een inputveld wordt geplaatst in de UI
-2. Er wordt geluisterd naar het `input`-event
-3. De ingevoerde tekst wordt vergeleken met de `name`-property van elk personage
-4. Alleen overeenkomende resultaten worden weergegeven
+---
 
-## 2. Filterfunctionaliteit
-Er zijn drie dropdown-menu's (selectboxen) toegepast waarmee de gebruiker de dataset kan verfijnen:
-- **Status:** Filteren op Alive, Dead of Unknown.
-- **Species:** Filteren op Human of Alien.
-- **Gender:** Filteren op geslacht.
+## 2. Zoekfunctionaliteit
 
-De functie `applyFilters()` in `filters.js` zorgt ervoor dat deze filters gecombineerd kunnen worden met de zoekopdracht.
+Gebruikers kunnen personages op naam zoeken via een zoekveld in de interface.
 
-### Werking
+### Event Listener (main.js)
 
-1. De gebruiker kiest een optie uit een dropdown
-2. De originele dataset wordt gefilterd
-3. Alleen items die voldoen aan de geselecteerde criteria blijven over
+```javascript
+document.getElementById('searchInput')
+  .addEventListener('input', (e) => {
+    state.filters.search = e.target.value;
+    applyFilters();
+});
+```
 
-Filters kunnen gecombineerd worden met de zoekfunctie.
+### Filtering Logica (filters.js)
 
-## 3. Sorteren
-De applicatie biedt de mogelijkheid om de personages alfabetisch te sorteren (A-Z en Z-A). Dit wordt direct op de gefilterde array toegepast met de `.sort()` methode voordat de UI opnieuw wordt gerenderd.
+```javascript
+if (state.filters.search) {
+  result = result.filter(character =>
+    character.name
+      .toLowerCase()
+      .includes(state.filters.search.toLowerCase())
+  );
+}
+```
 
-### Beschikbare sorteringen
+### Kenmerken
 
-* Alfabetisch (A–Z)
-* Alfabetisch (Z–A)
+* Case-insensitive vergelijking
+* Realtime filtering tijdens het typen
+* Geen extra API-calls nodig
+* Filtering gebeurt op reeds opgehaalde data
 
+Dit zorgt voor snelle en vloeiende interactie.
 
-## 4. Navigatie (SPA Router)
-Omdat dit een **Single Page Application (SPA)** is, vindt er geen paginarefresh plaats. De `initRouter` functie in `navigation.js` vangt kliks op de navigatieknoppen op en wisselt tussen de secties (Home, Characters, Feedback) door de CSS-class `active` te manipuleren.
+---
 
-## 5. Feedback Formulier & Validatie
-Op de feedbackpagina kan de gebruiker een formulier invullen. 
-- **Validatie:** Het script controleert of een naam is ingevuld en of er een beoordeling is gekozen.
-- **Feedback:** Na verzending krijgt de gebruiker een succesmelding in de UI te zien en wordt het formulier leeggemaakt.
+## 3. Dynamische Filters
 
+Naast zoeken kunnen gebruikers filteren op:
 
-## 6. Gebruikerservaring
+* Status (Alive, Dead, Unknown)
+* Species
+* Gender
+* Enkel favorieten
 
-* Resultaten worden realtime geüpdatet
-* Geen pagina-refresh nodig (SPA-principe)
-* Duidelijke UI-elementen (inputvelden en dropdowns)
+### Voorbeeld: Status filter
 
-Dit verhoogt de gebruiksvriendelijkheid en maakt het werken met grote datasets overzichtelijk.
+```javascript
+if (state.filters.status) {
+  result = result.filter(character =>
+    character.status === state.filters.status
+  );
+}
+```
 
-## 7. Conclusie
+### Voorbeeld: Favorieten filter
 
-Door het combineren van zoeken, filteren en sorteren ontstaat een interactieve applicatie waarin gebruikers snel en efficiënt specifieke data kunnen vinden. Deze aanpak sluit goed aan bij moderne webapplicaties en de vereisten van het project.
+```javascript
+if (state.filters.favoritesOnly) {
+  result = result.filter(character =>
+    state.favorites.includes(character.id)
+  );
+}
+```
+
+### Belangrijk principe
+
+Alle filters worden gecombineerd toegepast binnen één functie:
+
+```javascript
+export function applyFilters() {
+  let result = [...state.characters];
+
+  // filters toegepast hier
+
+  state.filtered = result;
+  renderCharacters(state.filtered);
+}
+```
+
+Dit zorgt ervoor dat:
+
+* Filters samen kunnen werken
+* De logica gecentraliseerd blijft
+* De UI altijd synchroon loopt met de state
+
+---
+
+## 4. Sortering
+
+De applicatie ondersteunt sortering op naam.
+
+### Implementatie
+
+```javascript
+if (state.filters.sort === 'nameAsc') {
+  result.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+if (state.filters.sort === 'nameDesc') {
+  result.sort((a, b) => b.name.localeCompare(a.name));
+}
+```
+
+### Waarom `localeCompare()`?
+
+* Correcte alfabetische vergelijking
+* Ondersteunt speciale tekens
+* Betrouwbaarder dan eenvoudige stringvergelijking
+
+Sortering wordt toegepast:
+
+1. Na filtering
+2. Voor rendering
+3. Direct op de gekopieerde array
+
+---
+
+## 5. Single Page Application (SPA) Navigatie
+
+De applicatie werkt als een SPA.
+Er wordt geen volledige pagina herladen bij navigatie.
+
+### Navigatie-logica (navigation.js)
+
+```javascript
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    pages.forEach(page => page.classList.remove('active'));
+    document.getElementById(link.dataset.page)
+      .classList.add('active');
+  });
+});
+```
+
+### CSS
+
+```css
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+```
+
+### Resultaat
+
+* Snelle navigatie
+* Geen refresh
+* State blijft behouden
+* Betere gebruikerservaring
+
+---
+
+## 6. Dynamische Her-rendering
+
+Elke keer wanneer:
+
+* Een filter verandert
+* Een sorteeroptie gekozen wordt
+* Nieuwe data wordt geladen
+* Een favoriet wordt aangepast
+
+Wordt `applyFilters()` opnieuw uitgevoerd.
+
+```javascript
+state.filtered = result;
+renderCharacters(state.filtered);
+```
+
+Hierdoor:
+
+* Blijft de UI altijd up-to-date
+* Is er geen handmatige DOM-manipulatie nodig buiten de renderfunctie
+* Wordt code duplicatie vermeden
+
+---
+
+## 7. Feedbackformulier met Validatie
+
+De applicatie bevat een feedbackformulier waar gebruikers een beoordeling kunnen geven.
+
+### Validatie
+
+```javascript
+if (!name || !rating) {
+  message.textContent = 'Please fill in all fields.';
+  return;
+}
+```
+
+### Opslag in localStorage
+
+```javascript
+const stored = JSON.parse(localStorage.getItem('feedback')) || [];
+stored.push({ name, rating, comment });
+
+localStorage.setItem('feedback', JSON.stringify(stored));
+```
+
+### Functionaliteit
+
+* Controle op verplichte velden
+* Feedback wordt opgeslagen tussen sessies
+* Gebruiker krijgt visuele bevestiging
+
+---
+
+## 8. Architectuur van Interactie
+
+De interactielogica is opgesplitst in modules:
+
+* `filters.js` → filtering en sortering
+* `navigation.js` → SPA-routing
+* `form.js` → formulierverwerking
+* `main.js` → event listeners
+* `ui.js` → rendering
+
+Deze modulaire aanpak zorgt voor:
+
+* Betere leesbaarheid
+* Makkelijk debuggen
+* Eenvoudige uitbreiding
+* Duidelijke scheiding van verantwoordelijkheden
+
+---
+
+## 9. Conclusie
+
+In deze fase werd de applicatie omgevormd van een statische dataweergave naar een interactieve webapplicatie.
+
+Belangrijkste realisaties:
+
+* Realtime zoekfunctionaliteit
+* Gecombineerde filtering
+* Alfabetische sortering
+* SPA-navigatie zonder refresh
+* Dynamische her-rendering
+* Feedbackformulier met validatie
+
+Hierdoor ontstond een responsieve en gebruiksvriendelijke applicatie waarin gebruikers actief kunnen interageren met de data.
 
 
 
