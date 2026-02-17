@@ -1,82 +1,87 @@
 /* =====================
-   Root / Base Styles
+   1. Root / Base Styles
 ===================== */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  --bg: #e6f2ff;      /* default blue */
+  --bg: #e6f2ff;
   --card: #cce4ff;
   --text-color: #000;
   --button-bg: #ffffff;
   --button-text: #000;
-  --border-color: #e75480; /* default pink outline */
+  --border-color: #e75480;
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* =====================
+   2. Page Structure
+===================== */
 .page {
-  display: none;
+  display: none; /* Hidden by default */
   padding: 2rem;
+  width: 100%;
+  min-height: 80vh;
 }
 
 .page.active {
-  display: block;
+  display: block; /* Shown when active */
 }
 
+/* Specific centering for Feedback page */
+#feedback.page.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+}
 
-/* HOME */
-.homeContent {
-  max-width: 700px;
-  margin: 4rem auto;
+/* =====================
+   3. Header & Navigation
+===================== */
+header {
+  width: 100%;
+  padding: 1.5rem 1rem;
   text-align: center;
+  background-color: var(--bg);
 }
 
-.homeContent h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.homeContent p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  opacity: 0.85;
-}
-
-.homeFeatures {
-  list-style: none;
-  padding: 0;
-  margin: 2rem 0;
-}
-
-.homeFeatures li {
-  font-size: 1.1rem;
-  margin: 0.4rem 0;
-}
-
-.ctaBtn {
-  padding: 0.8rem 1.5rem;
-  font-size: 1.1rem;
-  border-radius: 12px;
-  cursor: pointer;
+nav {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .navBtn {
   background: transparent;
   border: 2px solid var(--border-color);
   padding: 0.5rem 1.2rem;
-  margin: 0 0.3rem;
   border-radius: 12px;
   font-weight: 600;
+  cursor: pointer;
   transition: all 0.25s ease;
+  color: var(--text-color);
 }
 
 .navBtn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 .navBtn.active {
@@ -84,13 +89,24 @@
   color: white;
 }
 
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
+/* =====================
+   4. Home Page & Slideshow
+===================== */
+.homeContent {
+  max-width: 700px;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.homeContent h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 .slideshow {
-  margin-top: 3rem;
+  margin: 2rem 0;
   display: flex;
   justify-content: center;
 }
@@ -102,317 +118,246 @@ html, body {
   object-fit: cover;
   border-radius: 20px;
   border: 3px solid var(--border-color);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   transition: opacity 0.5s ease-in-out;
 }
 
-
-
-/* Body / Global */
-body {
-  background-color: var(--bg);
-  color: var(--text-color);
-  transition: background 0.3s, color 0.3s;
-}
-
-/* Themes */
-body[data-theme="pink"] {
-  --bg: #ffe4f0;
-  --card: #ffb6c1;
-  --text-color: #000;
-  --button-bg: #ffffff;
-  --button-text: #000;
-  --border-color: #e75480;
-}
-
-body[data-theme="blue"] {
-  --bg: #e6f2ff;
-  --card: #cce4ff;
-  --text-color: #000;
-  --button-bg: #ffffff;
-  --button-text: #000;
-  --border-color: #87cefa;
-}
-
-body[data-theme="dark"] {
-  --bg: #2a2735;
-  --card: #444;
-  --text-color: #fff;
-  --button-bg: #555;
-  --button-text: #fff;
-  --border-color: #888;
-}
-
-/* Header follows body theme */
-header {
-  width: 100%;
-  padding: 1rem;
-  text-align: center;
-  background-color: var(--bg);
-  transition: background 0.3s;
-}
-
 /* =====================
-   Grid & Cards
+   5. Character Grid & Cards
 ===================== */
 #characterGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Desktop = 6 */
-  gap: 1rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
   padding: 1rem;
   margin: 0 auto;
   max-width: 1400px;
 }
 
-
-
-
-
 .characterCard {
-  width: 100%;
   position: relative;
   background-color: var(--card);
   border: 2px solid var(--border-color);
   border-radius: 14px;
   padding: 1rem;
-  color: var(--text-color);
-  position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s, color 0.3s, border-color 0.3s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .characterCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .characterCard img {
   width: 100%;
-  border-radius: 12px 12px 0 0;
+  border-radius: 10px;
   margin-bottom: 0.5rem;
 }
 
-/* Buttons / Inputs */
-button, select, input[type="text"] {
-  border-radius: 8px;
-  border: 2px solid var(--border-color);
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s, border-color 0.3s;
-}
-
-button, select {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover, select:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-}
-
-button:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-
-/* Load More button */
-.loadMoreWrapper {
-  display: flex;
-  justify-content: flex-start; /* aligns under left-most card */  
-  margin: 1rem auto;
-}
-
-#loadMoreBtn {
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  background-color: var(--card);
-  color: var(--text-color);
-}
-
-
-/* Favorite button */
 .favBtn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   border: none;
-  background: transparent;
-  font-size: 1.4rem;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
-.favBtn.active {
-  transform: scale(1.2);
-}
-
-/*List*/
-.listView {
-  flex-direction: column;
-  margin: 2rem auto;
-  max-width: 1100px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.4rem;
-}
-.listHeader,
-.listRow {
-  display: grid;
-  grid-template-columns: 80px 1.5fr 1fr 1fr 1fr 0.5fr;
-  align-items: center;
-  padding: 0.8rem;
-}
-
-.listHeader {
-  font-weight: bold;
-  border-bottom: 3px solid var(--border-color);
-}
-
-.listRow {
-  background: var(--card);
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
-  transition: all 0.2s ease;
-}
-
-.listRow:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-}
-
-.listRow img {
-  width: 60px;
-  border-radius: 8px;
-}
-
-/* Feedback form */
-#feedback.page.active {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#feedbackForm {
-  max-width: 400px;
-  width: 100%;
-  background: var(--card);
-  padding: 2rem;
-  border-radius: 16px;
-  border: 2px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-
-
-/* Footer */
-footer {
-  margin-top: 2rem;
-  padding: 1rem;
-  text-align: center;
-  color: var(--text-color);
-}
-
-/* Controls */
+/* =====================
+   6. Controls & Favorites
+===================== */
 #controls {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
 }
 
-#controls input,
-#controls select {
-  padding: 0.5rem;
+#controls input, #controls select {
+  padding: 0.6rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--button-bg);
+  color: var(--button-text);
 }
 
 .favoritesLabel {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 10px;
   font-weight: 600;
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
   color: var(--text-color);
 }
 
 .favoritesLabel input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: #e75480; /* matches card border pink */
+  accent-color: var(--border-color);
+}
+
+/* =====================
+   7. Feedback Form
+===================== */
+#feedbackForm {
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto; 
+  background: var(--card);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+#feedbackForm label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  font-weight: 600;
+}
+
+#feedbackForm input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+}
+
+#submitFeedback {
+  padding: 1.2rem;       
+  font-size: 1.1rem;        
+  font-weight: 700;         
+  width: 100%;             
+  background-color: var(--border-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent; 
 }
 
-.favoritesLabel input[type="checkbox"]:hover {
-  transform: scale(1.2);
+/* Radio alignment fix */
+#feedbackForm label:has(input[type="radio"]) {
+  flex-direction: row;
+  align-items: center;
+  font-weight: normal;
+  cursor: pointer;
 }
 
-.favoritesLabel span {
-  user-select: none;
-}
-
-
-/* Responsive */
-@media (max-width: 1024px) {
-  #characterGrid {
-    grid-template-columns: repeat(3, 1fr);
+/* Submit Button Interactions */
+@media (hover: hover) {
+  #submitFeedback:hover {
+    background-color: #d13d6a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 84, 128, 0.4);
   }
+}
+
+#submitFeedback:active {
+  transform: scale(0.95);
+  background-color: #b03058;
+}
+
+/* =====================
+   8. List View (Table)
+===================== */
+.listRow {
+  display: grid;
+  grid-template-columns: 80px 1.5fr 1fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 0.8rem;
+  background: var(--card);
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+/* =====================
+   9. Themes
+===================== */
+body[data-theme="pink"] { --bg: #ffe4f0; --card: #ffb6c1; --border-color: #e75480; }
+body[data-theme="blue"] { --bg: #e6f2ff; --card: #cce4ff; --border-color: #87cefa; }
+body[data-theme="dark"] { --bg: #2a2735; --card: #444; --text-color: #fff; --button-bg: #555; --border-color: #888; }
+
+footer { padding: 2rem; text-align: center; opacity: 0.7; }
+
+/* =====================
+   10. RESPONSIVE VIEW
+===================== */
+@media (max-width: 1024px) {
+  #characterGrid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
+  .page { padding: 1.5rem 1rem; }
+
+  /* Home Fix */
+  .homeContent h2 { font-size: 1.8rem; }
+  .slideshow img { 
+    height: auto; 
+    aspect-ratio: 16/9; 
+    border-radius: 10px;
+  }
+
+  /* Grid Fix: 2 Cards per row */
   #characterGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
+    padding: 10px;
   }
 
-  /* Make pages truly edge-to-edge */
-  .page {
-    padding: 0;
-  }
+  .characterCard { padding: 0.8rem; }
 
-  /* Add controlled padding only inside content */
-  .homeContent {
-    max-width: 100%;
-    margin: 2rem 1rem;
-    padding: 0;
-  }
-
-  .slideshow {
-    margin: 2rem 0;
-  }
-
-  .slideshow img {
-    width: 100%;
-    max-width: 100%;
-    height: 260px;
-    border-radius: 0; /* remove rounded corners for full width look */
-  }
-
+  /* Form Fix */
   #feedbackForm {
+    padding: 1.5rem;
     max-width: 100%;
-    margin: 1.5rem 1rem;
-
   }
 
+  /* List View Fix (Stacked) */
+  .listHeader { display: none; }
+  .listRow {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  /* Controls Stacking */
+  #controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 @media (max-width: 480px) {
   #characterGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); 
   }
+  
+  .homeContent h2 { font-size: 1.5rem; }
 }
-
-/* Replace repeat (x, 1fr) => x -= 1 if you want only 2 cards displayed */
-
-
-
-

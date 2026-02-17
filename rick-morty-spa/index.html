@@ -1,3 +1,6 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body>
 
   <header>
@@ -88,17 +91,21 @@
       <h2>Did you like this website?</h2>
 
       <form id="feedbackForm">
+        <!-- Name Section -->
         <label>
-          Your name:
+          <span>Your name:</span>
           <input type="text" id="userName" required minlength="2">
         </label>
 
-        <p>How was your experience?</p>
-        <label><input type="radio" name="rating" value="great" required> Great</label>
-        <label><input type="radio" name="rating" value="ok"> OK</label>
-        <label><input type="radio" name="rating" value="meh"> Meh</label>
+        <!-- Rating Section -->
+        <div class="ratingSection">
+          <p>How was your experience?</p>
+          <label><input type="radio" name="rating" value="great" required> Great</label>
+          <label><input type="radio" name="rating" value="ok"> OK</label>
+          <label><input type="radio" name="rating" value="meh"> Meh</label>
+        </div>
 
-        <button type="submit">Submit feedback</button>
+        <button type="submit" id="submitFeedback">Submit feedback</button>
         <p id="formMessage"></p>
       </form>
     </section>
