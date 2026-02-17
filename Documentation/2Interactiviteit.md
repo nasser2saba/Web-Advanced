@@ -1,6 +1,6 @@
 # Interactiviteit
 
-## 1. Overzicht
+## Overzicht
 
 Om de applicatie gebruiksvriendelijk en interactief te maken, zijn verschillende interactieve functies geïmplementeerd:
 
@@ -10,13 +10,8 @@ Om de applicatie gebruiksvriendelijk en interactief te maken, zijn verschillende
 
 Deze functies werken samen op dezelfde dataset, zodat de gebruiker dynamisch resultaten kan aanpassen zonder nieuwe API-calls.
 
----
-
-## 2. Zoekfunctie
-
-### Werking
-
-De zoekfunctie laat de gebruiker personages zoeken op **naam**.
+## 1. Dynamisch Zoeken
+De zoekfunctie in `main.js` luistert naar het `input`-event op het zoekveld. De lijst met personages wordt in real-time gefilterd op basis van de ingevoerde naam. Hierbij wordt `toLowerCase()` gebruikt om de zoekopdracht hoofdletterongevoelig te maken.
 
 Stap-voor-stap:
 
@@ -25,24 +20,13 @@ Stap-voor-stap:
 3. De ingevoerde tekst wordt vergeleken met de `name`-property van elk personage
 4. Alleen overeenkomende resultaten worden weergegeven
 
-### Technische aanpak
+## 2. Filterfunctionaliteit
+Er zijn drie dropdown-menu's (selectboxen) toegepast waarmee de gebruiker de dataset kan verfijnen:
+- **Status:** Filteren op Alive, Dead of Unknown.
+- **Species:** Filteren op Human of Alien.
+- **Gender:** Filteren op geslacht.
 
-* `toLowerCase()` wordt gebruikt om hoofdlettergevoeligheid te vermijden
-* `includes()` controleert of de zoekterm voorkomt in de naam
-
-Dit zorgt voor directe feedback tijdens het typen.
-
----
-
-## 3. Filterfunctionaliteit
-
-### Gebruikte filters
-
-Er is filterfunctionaliteit toegevoegd op basis van:
-
-* Status (Alive / Dead / Unknown)
-* Gender
-* Species
+De functie `applyFilters()` in `filters.js` zorgt ervoor dat deze filters gecombineerd kunnen worden met de zoekopdracht.
 
 ### Werking
 
@@ -52,38 +36,23 @@ Er is filterfunctionaliteit toegevoegd op basis van:
 
 Filters kunnen gecombineerd worden met de zoekfunctie.
 
----
-
-## 4. Sorteermogelijkheden
+## 3. Sorteren
+De applicatie biedt de mogelijkheid om de personages alfabetisch te sorteren (A-Z en Z-A). Dit wordt direct op de gefilterde array toegepast met de `.sort()` methode voordat de UI opnieuw wordt gerenderd.
 
 ### Beschikbare sorteringen
 
 * Alfabetisch (A–Z)
 * Alfabetisch (Z–A)
 
-### Implementatie
 
-* De JavaScript `sort()`-methode wordt gebruikt
-* Er wordt gesorteerd op de `name`-property
-* De sortering wordt toegepast op de gefilterde dataset
+## 4. Navigatie (SPA Router)
+Omdat dit een **Single Page Application (SPA)** is, vindt er geen paginarefresh plaats. De `initRouter` functie in `navigation.js` vangt kliks op de navigatieknoppen op en wisselt tussen de secties (Home, Characters, Feedback) door de CSS-class `active` te manipuleren.
 
-Zo blijft de sorteerfunctie consistent met actieve filters en zoekopdrachten.
+## 5. Feedback Formulier & Validatie
+Op de feedbackpagina kan de gebruiker een formulier invullen. 
+- **Validatie:** Het script controleert of een naam is ingevuld en of er een beoordeling is gekozen.
+- **Feedback:** Na verzending krijgt de gebruiker een succesmelding in de UI te zien en wordt het formulier leeggemaakt.
 
----
-
-## 5. Samenwerking tussen functies
-
-De volgorde van verwerking:
-
-1. Originele dataset
-2. Filter toepassen
-3. Zoekopdracht toepassen
-4. Sortering toepassen
-5. Resultaat renderen in de UI
-
-Door deze volgorde blijven de resultaten voorspelbaar en logisch voor de gebruiker.
-
----
 
 ## 6. Gebruikerservaring
 
@@ -93,8 +62,9 @@ Door deze volgorde blijven de resultaten voorspelbaar en logisch voor de gebruik
 
 Dit verhoogt de gebruiksvriendelijkheid en maakt het werken met grote datasets overzichtelijk.
 
----
-
 ## 7. Conclusie
 
 Door het combineren van zoeken, filteren en sorteren ontstaat een interactieve applicatie waarin gebruikers snel en efficiënt specifieke data kunnen vinden. Deze aanpak sluit goed aan bij moderne webapplicaties en de vereisten van het project.
+
+
+
