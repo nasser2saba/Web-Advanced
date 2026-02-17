@@ -1,149 +1,172 @@
-# Rick & Morty Interactive Single Page Application
+
+# 🛸 Rick & Morty SPA
+
+## Navigatie
+
+- [🛸 Rick \& Morty SPA](#-rick--morty-spa)
+  - [Navigatie](#navigatie)
+  - [Projectbeschrijving](#projectbeschrijving)
+  - [Functionaliteiten](#functionaliteiten)
+    - [API-integratie](#api-integratie)
+    - [Zoeken \& Filteren](#zoeken--filteren)
+    - [Sorteren](#sorteren)
+    - [Infinite Scroll](#infinite-scroll)
+    - [Favorieten Systeem](#favorieten-systeem)
+    - [Thema Wisselaar](#thema-wisselaar)
+    - [Home Slideshow](#home-slideshow)
+    - [Feedbackformulier](#feedbackformulier)
+  - [Architectuur](#architectuur)
+    - [Waarom deze structuur?](#waarom-deze-structuur)
+  - [Gebruikte Technologieën](#gebruikte-technologieën)
+  - [Technische Vereisten \& Implementatie](#technische-vereisten--implementatie)
+    - [1. DOM-manipulatie](#1-dom-manipulatie)
+    - [2. Moderne JavaScript](#2-moderne-javascript)
+    - [3. Data \& API](#3-data--api)
+    - [4. Opslag \& Validatie](#4-opslag--validatie)
+    - [5. Styling \& Layout](#5-styling--layout)
+  - [Resultaat](#resultaat)
+  - [Screenshots](#screenshots)
+    - [De verschillende thema’s](#de-verschillende-themas)
+    - [De verschillende pagina’s](#de-verschillende-paginas)
+    - [Mobiele weergave (iPhone 12 Pro)](#mobiele-weergave-iphone-12-pro)
+  - [Auteur](#auteur)
+
+---
 
 ## Projectbeschrijving
 
-Dit project is een **Interactive Single Page Application (SPA)** ontwikkeld voor het vak **Advanced Web**. De applicatie maakt gebruik van de **Rick and Morty API** en laat gebruikers toe om personages uit de Rick & Morty-wereld te verkennen, te zoeken, te filteren, te sorteren en op te slaan als favorieten.
+Dit project is een **Interactive Single Page Application (SPA)** ontwikkeld voor het vak **Web Advanced**. De applicatie maakt gebruik van de **Rick and Morty API** en laat gebruikers toe om personages uit de Rick & Morty-wereld te verkennen, te zoeken, te filteren, te sorteren en op te slaan als favorieten.
 
-Het doel van dit project is om alle aangeleerde **moderne JavaScript-concepten**, **API-integratie**, **DOM-manipulatie** en **localStorage** samen te brengen in één coherente, gebruiksvriendelijke webapplicatie met echte data.
+Het doel van dit project is om alle aangeleerde **moderne JavaScript-concepten**, **API-integratie**, **DOM-manipulatie** en **localStorage** samen te brengen in één coherente en gebruiksvriendelijke webapplicatie met echte data.
+
+De applicatie focust op:
+
+* API-integratie
+* Infinite scrolling
+* Filteren & sorteren
+* Personalisatie (favorieten & thema)
+* Modulaire architectuur
+* Persistente opslag met localStorage
 
 ---
 
 ## Functionaliteiten
 
-### Dataverzameling & Weergave
+### API-integratie
 
-* Data wordt opgehaald via de **Rick and Morty API**
-* Gebruik van het `character` endpoint (meer dan 20 objecten per request)
-* Personages worden weergegeven in een **visuele lijst / grid**
-* Elk personage toont minstens de volgende gegevens:
+* Haalt karakterdata op via:
 
-  * Afbeelding
-  * Naam
-  * Status (Alive / Dead / Unknown)
-  * Species
-  * Gender
-  * Laatste bekende locatie
-  * Aantal afleveringen
+  ```
+  https://rickandmortyapi.com/api/character
+  ```
+
+* Gebruikt `async/await`
+
+* Ondersteunt paginatie
+
+* Toont 20 karakters per pagina
+
+* Laadt automatisch extra karakters via infinite scroll
 
 ---
 
-### Interactiviteit
+### Zoeken & Filteren
 
-* **Zoekfunctie** op naam van personages
-* **Filtermogelijkheden**:
+Gebruikers kunnen:
+
+* Karakters zoeken op naam (realtime)
+* Filteren op:
 
   * Status
-  * Species
+  * Soort (species)
   * Gender
-* **Sorteermogelijkheden**:
-
-  * Alfabetisch (A–Z / Z–A)
-  * Status
-  * Aantal afleveringen
+  * Alleen favorieten
+* Filters combineren
+* Resultaten onmiddellijk zien updaten
 
 ---
 
-### Personalisatie
+### Sorteren
 
-* Gebruikers kunnen personages toevoegen aan **favorieten**
-* Favorieten worden opgeslagen in **LocalStorage**
-* Data blijft bewaard tussen sessies
-* Gebruikersvoorkeuren:
+Karakters kunnen gesorteerd worden op:
 
-  * Dark / Light mode
-  * Laatst gebruikte filters
+* Naam (A → Z)
+* Naam (Z → A)
 
----
-
-### Gebruikerservaring
-
-* Responsive design (desktop & mobiel)
-* Gebruiksvriendelijke interface
-* Duidelijke navigatie en interactieve elementen
-* Visueel aantrekkelijke kaarten met iconen
+De sortering wordt toegepast na filtering om consistente resultaten te garanderen.
 
 ---
 
-## Technische Vereisten & Implementatie
+### Infinite Scroll
 
-### 1.DOM Manipulation:
-- **Selection:** Used document.getElementById and querySelectorAll in ui.js and main.js.
-- **Manipulation:** Dynamic card creation using grid.appendChild(card) in ui.js.
-- **Events:** Added listeners for filters, search, and navigation (e.g., initRouter in navigation.js).
-### 2.Modern JavaScript:
-- **Constants/Arrow Functions:** Used throughout all .js files (e.g., export const state, entries => {}).
-- **Template Literals:** Used for generating character card HTML in ui.js.
-- **Array Methods:** Used .filter(), .forEach(), .includes(), and .sort() in filters.js and ui.js.
-- **Ternary Operator:** Used for toggling heart icons: ${isFav ? '❤️' : '🤍'} in ui.js.
-- **Promises / Async & Await:** Implemented in api.js to fetch data from the Rick & Morty API.
-- **Observer API:** Used in observer.js to implement infinite scrolling.
-### 3.Data & API:
-- **Fetch:** Implemented in api.js to retrieve character data.
-- **JSON:** Processed API responses and local storage data in api.js and storage.js.
-### 4.Storage & Validation:
-- **Form Validation:** Implemented in form.js using trim() and checking for radio button selection before submission.
-- **LocalStorage:** Used in storage.js to persist favorites and theme preferences.
-### 5.Styling & Layout:
-- **CSS Grid:** Used for the main character gallery.
-- **Flexbox:** Used for navigation, controls, and form alignment.
-- **User-Friendly Elements:** Added heart icons for favorites and a responsive slideshow.
-### 6.Tooling:
-- Project structured for Vite with a clear separation of src/js, src/css, and src/assets
+Geïmplementeerd met `IntersectionObserver`.
 
-### DOM Manipulatie
-
-* Selecteren van DOM-elementen (`querySelector`, `getElementById`)
-* Dynamisch renderen van content (`createElement`, `innerHTML`)
-* Event listeners voor:
-
-  * Zoekveld
-  * Filters
-  * Sorteerknoppen
-  * Favorieten
+* Laadt automatisch de volgende pagina
+* Geen paginatieknoppen nodig
+* Vlotte gebruikerservaring
+* Geoptimaliseerde prestaties
 
 ---
 
-### Modern JavaScript
+### Favorieten Systeem
 
-* Gebruik van `const` en `let`
-* Template literals
-* Array iteraties (`map`, `filter`, `sort`, `find`)
-* Arrow functions
-* Conditional (ternary) operator
-* Callback functions (events)
-* Promises
-* `async / await`
-* **Observer API** (IntersectionObserver voor infinite scroll)
+Gebruikers kunnen:
 
----
+* Karakters toevoegen aan favorieten
+* Karakters verwijderen uit favorieten
+* Filteren op alleen favorieten
+* Favorieten bewaren tussen sessies
 
-### Data & API
+Favorieten worden opgeslagen via:
 
-* Data ophalen met `fetch()`
-* JSON-data verwerken en weergeven
-* Pagination van API-data
-* Foutafhandeling bij API-calls
+```js
+localStorage.setItem('favorites', JSON.stringify(state.favorites));
+```
 
 ---
 
-### Opslag & Validatie
+### Thema Wisselaar
 
-* Favorieten opslaan in **LocalStorage**
-* Gebruikersvoorkeuren opslaan
-* Basis formulier validatie (zoekveld)
+De applicatie ondersteunt light- en darkmode.
 
----
+* Gebruikt CSS-variabelen
+* Thema wordt opgeslagen in localStorage
+* Automatisch toegepast bij het herladen van de pagina
 
-### Styling & Layout
-
-* HTML-structuur met **Flexbox / CSS Grid**
-* Custom CSS styling
-* Gebruik van iconen en interactieve knoppen
-* Responsive layout
+```js
+document.body.dataset.theme = state.preferences.theme;
+```
 
 ---
 
-### Tooling & Structuur
+### Home Slideshow
+
+De homepagina bevat:
+
+* Een automatische afbeeldingsslideshow
+* Fade-animatie
+* Wissel om de 3 seconden
+
+Dit verhoogt de visuele aantrekkelijkheid van de applicatie.
+
+---
+
+### Feedbackformulier
+
+Gebruikers kunnen:
+
+* Hun naam invullen
+* Een rating geven
+* Een commentaar schrijven
+
+Inclusief:
+
+* Basisvalidatie
+* Opslag in localStorage
+
+---
+
+## Architectuur
 
 * Project opgezet met **Vite**
 * Gestructureerde mappenindeling:
@@ -158,43 +181,154 @@ index.html
 
 * Gescheiden HTML, CSS en JavaScript
 * Meerdere betekenisvolle commits op GitHub
+* Modulaire structuur:
+
+```
+js/
+│
+├── api.js           → API-communicatie
+├── state.js         → Centrale state management
+├── filters.js       → Filter- en sorteermodule
+├── observer.js      → Infinite scroll logica
+├── ui.js            → Renderfuncties
+├── storage.js       → localStorage beheer
+├── preferences.js   → Themabeheer
+├── slideshow.js     → Home slideshow
+├── navigation.js    → SPA-routing
+├── form.js          → Feedbackverwerking
+├── main.js          → Initialisatie van de app
+```
+
+### Waarom deze structuur?
+
+* Duidelijke scheiding van verantwoordelijkheden
+* Eenvoudiger debuggen
+* Schaalbare opbouw
+* Professionele projectorganisatie
 
 ---
 
-## Gebruikte API & Bronnen
+## Gebruikte Technologieën
 
-* **Rick and Morty API**
-  [https://rickandmortyapi.com/documentation](https://rickandmortyapi.com/documentation)
-* **Bronnen**
-* Rick and Morty API Documentatie
-* MDN Web Docs
-* Cursusmateriaal Advanced Web
+* HTML5
+* CSS3 (Grid, variabelen, transities)
+* Vanilla JavaScript (ES6 Modules)
+* IntersectionObserver API
+* localStorage
+* Fetch API
 
+Er werden geen frameworks of externe libraries gebruikt.
+
+---
+
+## Technische Vereisten & Implementatie
+
+### 1. DOM-manipulatie
+
+* **Selectie:**
+  Gebruik van `document.getElementById()` en `querySelectorAll()` in `ui.js` en `main.js`
+
+* **Manipulatie:**
+  Dynamische aanmaak van karakterkaarten via `grid.appendChild(card)` in `ui.js`
+
+* **Events:**
+  Toevoegen van event listeners voor filters, zoekfunctie en navigatie (bijvoorbeeld `initRouter` in `navigation.js`)
+
+---
+
+### 2. Moderne JavaScript
+
+* **Constanten & Arrow Functions:**
+  Gebruikt in alle `.js`-bestanden (bijvoorbeeld `export const state`, `entries => {}`)
+
+* **Template Literals:**
+  Gebruikt voor het genereren van HTML-structuur van karakterkaarten in `ui.js`
+
+* **Array-methodes:**
+  Gebruik van `.filter()`, `.forEach()`, `.includes()` en `.sort()` in `filters.js` en `ui.js`
+
+* **Ternary Operator:**
+  Gebruikt voor het wisselen van favoriet-iconen:
+  `${isFav ? '❤️' : '🤍'}` in `ui.js`
+
+* **Promises / Async & Await:**
+  Geïmplementeerd in `api.js` voor het ophalen van data via de API
+
+* **Observer API:**
+  Gebruikt in `observer.js` voor de implementatie van infinite scrolling
+
+---
+
+### 3. Data & API
+
+* **Fetch API:**
+  Geïmplementeerd in `api.js` om karakterdata op te halen
+
+* **JSON-verwerking:**
+  Verwerking van API-responses en localStorage-data in `api.js` en `storage.js`
+
+---
+
+### 4. Opslag & Validatie
+
+* **Formuliervalidatie:**
+  Geïmplementeerd in `form.js` met gebruik van `trim()` en controle op geselecteerde radio-buttons vóór verzending
+
+* **LocalStorage:**
+  Gebruikt in `storage.js` voor het opslaan van favorieten en themavoorkeuren
+
+---
+
+### 5. Styling & Layout
+
+* **CSS Grid:**
+  Gebruikt voor de hoofdgalerij van karakters
+
+* **Flexbox:**
+  Toegepast voor navigatie, filtercontroles en formulieruitlijning
+
+* **Gebruiksvriendelijke elementen:**
+  Toevoeging van harticonen voor favorieten en een responsieve slideshow op de homepagina
+
+---
+
+## Resultaat
+
+Het eindresultaat is een volledig functionele interactieve webapplicatie die:
+
+* Dynamisch API-data ophaalt en weergeeft
+* Geavanceerde zoek- en filtermogelijkheden biedt
+* Personalisatie ondersteunt
+* Gegevens bewaart tussen sessies
+* Een moderne en vlotte gebruikerservaring levert
 
 ---
 
 ## Screenshots
 
-**De verschillende Themas:**
+### De verschillende thema’s
 
-![alt text](/rick-morty-spa/src/assets/screenshots/PinkTheme.png)
-![alt text](/rick-morty-spa/src/assets/screenshots/BlueTheme.png)
-![alt text](/rick-morty-spa/src/assets/screenshots/DarkTheme.png)
+![Pink Theme](/rick-morty-spa/src/assets/screenshots/PinkTheme.png)
+![Blue Theme](/rick-morty-spa/src/assets/screenshots/BlueTheme.png)
+![Dark Theme](/rick-morty-spa/src/assets/screenshots/DarkTheme.png)
 
-**De verschillende Pagina's:**
-![alt text](/rick-morty-spa/src/assets/screenshots/HomePage.png)
-![alt text](/rick-morty-spa/src/assets/screenshots/FeedbackPage.png)
+### De verschillende pagina’s
 
-**Mobile View (Iphone 12 pro):**
-![alt text](/rick-morty-spa/src/assets/screenshots/Mobile-Home.png)
-![alt text](/rick-morty-spa/src/assets/screenshots/Mobile-Characters.png)
-![alt text](/rick-morty-spa/src/assets/screenshots/Mobile-Feedback.png)
+![Home Page](/rick-morty-spa/src/assets/screenshots/HomePage.png)
+![Feedback Page](/rick-morty-spa/src/assets/screenshots/FeedbackPage.png)
+
+### Mobiele weergave (iPhone 12 Pro)
+
+![Mobile Home](/rick-morty-spa/src/assets/screenshots/Mobile-Home.png)
+![Mobile Characters](/rick-morty-spa/src/assets/screenshots/Mobile-Characters.png)
+![Mobile Feedback](/rick-morty-spa/src/assets/screenshots/Mobile-Feedback.png)
+
+---
 
 ## Auteur
 
-Saba Le Nassr
-Opleiding: Bachelor in de Toegepaste Informatica
-Hogeschool: ErasmusHogeSchool Brussel
-Vak: Web Advanced 
-
+**Saba Le Nassr**
+Bachelor in de Toegepaste Informatica
+Erasmushogeschool Brussel
+Vak: Web Advanced
 
