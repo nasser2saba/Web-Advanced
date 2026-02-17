@@ -1,115 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rick & Morty Explorer</title>
 </head>
 <body>
-
   <header>
     <h1>Rick & Morty Characters</h1>
-
     <nav>
-      <button class="navBtn" data-page="home">Home</button>
+      <button class="navBtn active" data-page="home">Home</button>
       <button class="navBtn" data-page="characters">Characters</button>
       <button class="navBtn" data-page="feedback">Feedback</button>
     </nav>
   </header>
 
   <main>
-
     <!-- HOME PAGE -->
     <section id="home" class="page active">
       <div class="homeContent">
-        <h2>Welcome <br> to the Rick & Morty Explorer </h2>
-
+        <h2>Welcome <br> to the Rick & Morty Explorer</h2>
         <div class="slideshow">
-        <img id="slideshowImage" src="" alt="Rick & Morty images">
+          <img id="slideshowImage" src="" alt="Rick & Morty images">
         </div>
-        <p>
-          Discover characters from the Rick & Morty universe.
-          Filter, sort, and favorite them your way.
-        </p>
-        <button data-page="characters" class="navBtn">
-          Explore Characters
-        </button>
+        <p>Discover characters from the Rick & Morty universe. Filter, sort, and favorite them your way.</p>
+        <button data-page="characters" class="navBtn">Explore Characters</button>
       </div>
     </section>
 
     <!-- CHARACTERS PAGE -->
     <section id="characters" class="page">
-
-      <!-- CONTROLS (ONLY HERE) -->
       <div id="controls">
-
         <select id="themeSelect">
-          <option value="pink">Pink</option>
-          <option value="blue">Blue</option>
-          <option value="dark">Dark</option>
+          <option value="pink">Pink Theme</option>
+          <option value="blue">Blue Theme</option>
+          <option value="dark">Dark Theme</option>
         </select>
-
         <input type="text" id="searchInput" placeholder="Search character...">
-
         <select id="statusFilter">
           <option value="">All statuses</option>
           <option value="Alive">Alive</option>
           <option value="Dead">Dead</option>
           <option value="unknown">Unknown</option>
         </select>
-
         <select id="speciesFilter">
           <option value="">All species</option>
           <option value="Human">Human</option>
           <option value="Alien">Alien</option>
         </select>
-
         <select id="genderFilter">
           <option value="">All genders</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
-         
           <option value="unknown">Unknown</option>
         </select>
-
         <select id="sortSelect">
           <option value="">Sort by</option>
           <option value="nameAsc">Name A-Z</option>
           <option value="nameDesc">Name Z-A</option>
         </select>
-
         <label class="favoritesLabel">
           <input type="checkbox" id="favoritesFilter">
           Show Favorites 
         </label>
       </div>
 
-      <!-- DATA -->
       <div id="characterGrid"></div>
-      <div id="observerTarget"></div>
-
+      <div id="observerTarget" style="height: 20px;"></div>
     </section>
 
     <!-- FEEDBACK PAGE -->
     <section id="feedback" class="page">
       <h2>Did you like this website?</h2>
-
       <form id="feedbackForm">
-        <!-- Name Section -->
         <label>
           <span>Your name:</span>
           <input type="text" id="userName" required minlength="2">
         </label>
-
-        <!-- Rating Section -->
         <div class="ratingSection">
           <p>How was your experience?</p>
           <label><input type="radio" name="rating" value="great" required> Great</label>
           <label><input type="radio" name="rating" value="ok"> OK</label>
           <label><input type="radio" name="rating" value="meh"> Meh</label>
         </div>
-
         <button type="submit" id="submitFeedback">Submit feedback</button>
         <p id="formMessage"></p>
       </form>
     </section>
-
   </main>
 
   <footer>
@@ -118,3 +95,4 @@
 
   <script type="module" src="./src/js/main.js"></script>
 </body>
+</html>
