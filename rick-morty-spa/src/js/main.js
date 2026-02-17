@@ -9,13 +9,11 @@ import { initFormValidation } from './form.js';
 import { initRouter } from './navigation.js';
 import { initSlideshow } from './slideshow.js';
 
-
 initFormValidation();
 initObserver();
 initRouter();
 initSlideshow();
 
-/* APP START */
 async function init() {
   loadFavorites();
   loadPreferences();
@@ -28,33 +26,20 @@ async function init() {
   applyFilters();
 }
 
-/* SEARCH & FILTERS & SORT */
+// Event Listeners for Filters
 document.getElementById('searchInput').addEventListener('input', e => {
   state.filters.search = e.target.value;
   applyFilters();
 });
 
-document.getElementById('statusFilter').addEventListener('change', e => {
-  state.filters.status = e.target.value;
-  applyFilters();
+document.querySelectorAll('#statusFilter, #speciesFilter, #genderFilter, #sortSelect').forEach(el => {
+  el.addEventListener('change', e => {
+    const filterKey = e.target.id.replace('Filter', '').replace('Select', '').toLowerCase();
+    state.filters[filterKey] = e.target.value;
+    applyFilters();
+  });
 });
 
-document.getElementById('speciesFilter').addEventListener('change', e => {
-  state.filters.species = e.target.value;
-  applyFilters();
-});
-
-document.getElementById('genderFilter').addEventListener('change', e => {
-  state.filters.gender = e.target.value;
-  applyFilters();
-});
-
-document.getElementById('sortSelect').addEventListener('change', e => {
-  state.filters.sort = e.target.value;
-  applyFilters();
-});
-
-/* THEMA EVENT */
 document.getElementById('themeSelect').addEventListener('change', e => {
   state.preferences.theme = e.target.value;
   savePreferences();
@@ -65,6 +50,5 @@ document.getElementById('favoritesFilter').addEventListener('change', e => {
   state.filters.favoritesOnly = e.target.checked;
   applyFilters();
 });
-
 
 init();
