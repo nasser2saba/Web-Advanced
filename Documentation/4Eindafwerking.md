@@ -1,254 +1,157 @@
 # Documentatie 4 – Eindafwerking, UI-optimalisatie & Architectuur
 
----
-
 ## 1. Overzicht
 
-In deze laatste fase werd de applicatie technisch afgewerkt en visueel geoptimaliseerd.
+In deze laatste fase werd de applicatie technisch afgewerkt, visueel geoptimaliseerd en robuuster gemaakt voor fouten.
 
 De focus lag op:
 
-* Verbeterde gebruikerservaring (UX)
-* Visuele verfijning van de card-layout
-* Home-slideshow
-* Optimalisatie van rendering
-* Consistente SPA-structuur
-* Code-organisatie en modulariteit
-
-De applicatie werd hierbij volledig omgevormd tot een afgewerkte Single Page Application met een consistente gebruikerservaring.
+* **Gebruikerservaring (UX):** Persistentie van de laatst bezochte pagina
+* **Foutafhandeling:** Beveiliging tegen API rate-limits
+* **Visuele verfijning:** Home-slideshow en mobiele optimalisatie
+* **Architectuur:** Consistente modulaire opbouw en state-management
 
 ---
 
-## 2. Home Slideshow
+## 2. State Persistentie (Paginabehoud)
 
-Op de homepagina werd een automatische slideshow toegevoegd om de applicatie visueel aantrekkelijker te maken.
+Een veelvoorkomend probleem bij SPA's is dat een refresh de gebruiker terugstuurt naar de homepagina. Dit werd opgelost door de actieve pagina op te slaan in `localStorage`.
 
----
+### 2.1 Implementatie in `navigation.js`
 
-### 2.1 Implementatie
-
-In `slideshow.js`:
+De router is uitgebreid met een helper-functie `navigateTo()` die de status opslaat:
 
 ```javascript
-const images = [
-  '/images/slide1.jpg',
-  '/images/slide2.jpg',
-  '/images/slide3.jpg'
-];
+export function navigateTo(targetPage) {
+  // Opslaan in localStorage voor persistentie na refresh
+  localStorage.setItem('lastPage', targetPage);
 
-let currentIndex = 0;
+  // UI bijwerken (classes switchen)
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(p => p.classList.remove('active'));
+  document.getElementById(targetPage).classList.add('active');
+  // ... navBtn activatie logica
+}
+```
 
-export function startSlideshow() {
-  const imgEl = document.getElementById('slideshowImage');
+### 2.2 Initialisatie in `main.js`
 
-  setInterval(() => {
-    imgEl.style.opacity = 0;
+Bij het opstarten van de app wordt gecontroleerd wat de laatst bezochte pagina was:
 
-    setTimeout(() => {
-      currentIndex = (currentIndex + 1) % images.length;
-      imgEl.src = images[currentIndex];
-      imgEl.style.opacity = 1;
-    }, 300);
-
-  }, 3000);
+```javascript
+async function init() {
+  const lastPage = localStorage.getItem('lastPage') || 'home';
+  navigateTo(lastPage);
+  // ... rest van de initialisatie
 }
 ```
 
 ---
 
-### 2.2 CSS Fade-effect
+## 3. API Beveiliging & Rate Limiting
+
+Tijdens het snel scrollen met Infinite Scroll konden er te veel API-verzoeken tegelijk worden verzonden, wat leidde tot **429-fouten (Too Many Requests)**. Dit werd opgelost met een *Fetching Lock* en een visuele waarschuwing.
+
+### 3.1 De Fetching Lock in `observer.js`
+
+Door een `isFetching` variabele te gebruiken, worden meerdere gelijktijdige calls voorkomen:
+
+```javascript
+let isFetching = false;
+
+if (entry.isIntersecting && !isFetching) {
+  isFetching = true; // Vergrendel nieuwe verzoeken
+  try {
+    const data = await fetchCharacters(state.currentPage + 1);
+    // ... data verwerken
+  } catch (error) {
+    showApiPopup(); // Toon waarschuwing bij fout
+  } finally {
+    isFetching = false; // Ontgrendel pas na voltooiing
+  }
+}
+```
+
+### 3.2 Gebruikersfeedback (API Popup)
+
+Als de API-limiet wordt bereikt, verschijnt er een subtiele rode popup onderaan het scherm.
 
 ```css
-#slideshowImage {
-  transition: opacity 0.3s ease-in-out;
+#apiPopup {
+  position: fixed;
+  bottom: 20px;
+  background: #ff4d4d;
+  transition: opacity 0.3s;
 }
 ```
 
-### Resultaat
-
-* Automatische beeldwisseling om de 3 seconden
-* Zachte fade-animatie
-* Verhoogde visuele aantrekkelijkheid
-* Professionelere uitstraling
-
 ---
 
-## 3. Definitieve Card-Only Layout
+## 4. Definitieve Card-Only Layout & Mobiele Focus
 
-Tijdens de ontwikkeling werd gekozen om de lijstweergave te verwijderen en volledig te werken met een card-layout.
+Er is definitief gekozen voor een card-layout die op mobiel optimaal presteert.
 
-Dit zorgt voor:
-
-* Consistent design
-* Betere visuele hiërarchie
-* Duidelijkere informatiepresentatie
-
----
-
-### 3.1 Grid Structuur
+### 4.1 Responsieve Grid
 
 ```css
 #characterGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr); /* Desktop */
   gap: 1.5rem;
 }
-```
 
----
-
-### 3.2 Verbeterde Card Styling
-
-```css
-.characterCard {
-  background: var(--card);
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  transition: transform 0.2s ease;
-}
-
-.characterCard:hover {
-  transform: scale(1.05);
-}
-```
-
-### UI Verbeteringen
-
-* Hover-effect op cards
-* Consistente spacing
-* CSS-variabelen voor thema-ondersteuning
-* Visuele focus op afbeelding en naam
-
----
-
-## 4. Dynamische Rendering Optimalisatie
-
-De rendering gebeurt via één centrale functie:
-
-```javascript
-export function renderCharacters(characters) {
-  const grid = document.getElementById('characterGrid');
-  grid.innerHTML = '';
-
-  characters.forEach(character => {
-    grid.innerHTML += createCharacterCard(character);
-  });
-}
-```
-
-### Waarom centrale rendering?
-
-* Geen verspreide DOM-manipulatie
-* Eén herbruikbaar renderpunt
-* Minder kans op inconsistentie
-* Makkelijk uitbreidbaar
-
-Alle updates verlopen via:
-
-```javascript
-applyFilters();
-```
-
-Hierdoor blijft de UI altijd synchroon met de state.
-
----
-
-## 5. Performance Optimalisaties
-
-### 5.1 Infinite Scroll Behouden
-
-De IntersectionObserver zorgt ervoor dat:
-
-* Enkel nieuwe data geladen wordt wanneer nodig
-* Geen onnodige API-calls gebeuren
-* Performance optimaal blijft
-
-```javascript
-if (entry.isIntersecting && state.currentPage < state.totalPages) {
-  state.currentPage++;
-  const data = await fetchCharacters(state.currentPage);
-  state.characters.push(...data.characters);
-  applyFilters();
+@media (max-width: 768px) {
+  #characterGrid {
+    grid-template-columns: repeat(2, 1fr); /* Mobiel: Altijd 2 kaarten */
+  }
 }
 ```
 
 ---
 
-### 5.2 Geen Herlaadbare Pagina’s
+## 5. Home Slideshow
 
-Dankzij SPA-structuur:
+De homepagina bevat een automatische slideshow met een vloeiend fade-effect om de app visueel te versterken.
 
-* Geen volledige refresh
-* State blijft behouden
-* Snellere navigatie
+* Gebruikt `setInterval` (3 seconden)
+* CSS-transities op `opacity` voor een professionele look
 
 ---
 
 ## 6. Finale Architectuur
 
-De applicatie is modulair opgebouwd:
+De applicatie volgt een strikt modulaire opbouw via Vite:
 
-| Bestand        | Verantwoordelijkheid   |
-| -------------- | ---------------------- |
-| api.js         | API-communicatie       |
-| state.js       | Centrale data-opslag   |
-| filters.js     | Filter & sorteerlogica |
-| observer.js    | Infinite scroll        |
-| ui.js          | Rendering              |
-| storage.js     | localStorage beheer    |
-| preferences.js | Thema toepassen        |
-| slideshow.js   | Home slideshow         |
-| navigation.js  | SPA-routing            |
-| form.js        | Feedback verwerking    |
-| main.js        | Initialisatie          |
-
-### Voordelen van deze architectuur
-
-* Scheiding van verantwoordelijkheden
-* Makkelijk onderhoud
-* Duidelijke structuur
-* Eenvoudige uitbreidbaarheid
-* Professionele opbouw
+| Bestand         | Verantwoordelijkheid                          |
+| --------------- | --------------------------------------------- |
+| `api.js`        | Fetching met error handling                   |
+| `filters.js`    | Filters, sorteren, zoek functie en favorieten |
+| `form.js`       | Feedback validatie en opslag                  |
+| `main.js`       | Coördinatie van alle modules en initialisatie |
+| `navigation.js` | SPA-routing met localStorage persistentie     |
+| `observer.js`   | Infinite scroll met fetching-lock             |
+| `preferences.js`| Ophalen van geprefereerde thema               |
+| `slideshow.js`  | Gewoon de slideshow :)                        |
+| `state.js`      | Centrale state (filters, page, characters)    |
+| `storage.js`    | Beheer van favorieten en thema-voorkeuren     |
+| `ui.js`         | Card rendering & event listeners              |
 
 ---
 
-## 7. UX Verbeteringen
+## 7. UX & Performance Verbeteringen
 
-De finale versie bevat meerdere gebruikersgerichte verbeteringen:
+De finale versie bevat deze geavanceerde verbeteringen:
 
-* Automatische slideshow op homepagina
-* Hover-animaties op cards
-* Infinite scroll
-* Thema-switcher
-* Favorietenfilter
-* Dynamische her-rendering
-* Feedbackformulier
-
-Samen zorgen deze elementen voor een:
-
-* Vloeiende gebruikerservaring
-* Moderne uitstraling
-* Intuïtieve interactie
-* Consistente visuele stijl
+* **Persistentie:** De gebruiker blijft op de pagina waar hij gebleven was na een refresh
+* **API Safety:** Voorkomt crash door te veel verzoeken tijdens het scrollen
+* **Mobiel design:** 2-koloms grid en touch-vriendelijke knoppen (scale effect)
+* **Thema-switcher:** Volledig persistente Pink/Blue/Dark modi
+* **Infinite Scroll:** Naadloze overgang tussen pagina's data
 
 ---
 
 ## 8. Eindconclusie
 
-In deze laatste fase werd de applicatie volledig afgewerkt en geoptimaliseerd.
+De applicatie is getransformeerd van een simpele data-lijst naar een robuuste, gebruiksvriendelijke Single Page Application.
 
-De applicatie beschikt nu over:
-
-* Dynamische API-integratie
-* Gecombineerde filtering en sortering
-* Favorieten met persistente opslag
-* Thema-personalisatie
-* Infinite scroll
-* SPA-navigatie
-* Home slideshow
-* Professionele card-layout
-
-Door de modulaire structuur en consistente state-management is de applicatie technisch stabiel, schaalbaar en onderhoudbaar.
-
-Het eindresultaat is een interactieve, gepersonaliseerde en visueel aantrekkelijke webapplicatie die voldoet aan moderne front-end ontwikkelingsprincipes.
+Door de implementatie van state-persistentie en API-lockmechanismen voldoet de app aan professionele standaarden voor moderne web-apps. Het eindresultaat is een snelle, visueel aantrekkelijke **Rick & Morty explorer** die consistent presteert op zowel desktop als mobiele apparaten.
