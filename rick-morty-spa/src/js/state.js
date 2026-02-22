@@ -5,6 +5,7 @@ export const state = {
   view: 'cards',
   currentPage: 1,
   totalPages: 1,
+  activePage: 'home', 
   filters: {
     search: '',
     status: '',

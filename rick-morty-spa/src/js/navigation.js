@@ -6,25 +6,24 @@ export function initRouter() {
     if (!btn) return;
 
     const targetPage = btn.dataset.page;
-    const targetSection = document.getElementById(targetPage);
-
-    if (!targetSection) return;
-
-    // Hide all pages
-    pages.forEach(page => page.classList.remove('active'));
-
-    // Remove active state from nav buttons only
-    document.querySelectorAll('.navBtn').forEach(b =>
-      b.classList.remove('active')
-    );
-
-    // Show target page
-    targetSection.classList.add('active');
-
-    // Activate nav button if it exists
-    const navBtn = document.querySelector(
-      `.navBtn[data-page="${targetPage}"]`
-    );
-    navBtn?.classList.add('active');
+    
+    // Save to local storage 
+    localStorage.setItem('lastPage', targetPage);
+    
+    navigateTo(targetPage);
   });
+}
+
+// Move the logic to a helper function so we can use it on load too
+export function navigateTo(targetPage) {
+  const pages = document.querySelectorAll('.page');
+  const targetSection = document.getElementById(targetPage);
+  if (!targetSection) return;
+
+  pages.forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.navBtn').forEach(b => b.classList.remove('active'));
+
+  targetSection.classList.add('active');
+  const navBtn = document.querySelector(`.navBtn[data-page="${targetPage}"]`);
+  navBtn?.classList.add('active');
 }

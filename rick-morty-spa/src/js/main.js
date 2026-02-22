@@ -8,16 +8,22 @@ import { initObserver } from './observer.js';
 import { initFormValidation } from './form.js';
 import { initRouter } from './navigation.js';
 import { initSlideshow } from './slideshow.js';
+import { navigateTo } from './navigation.js';
 
 initFormValidation();
 initObserver();
 initRouter();
 initSlideshow();
 
+
 async function init() {
   loadFavorites();
   loadPreferences();
   applyPreferences();
+  
+  // Check last saved page
+  const lastPage = localStorage.getItem('lastPage') || 'home';
+  navigateTo(lastPage);
 
   const data = await fetchCharacters(state.currentPage);
   state.characters = data.characters;
